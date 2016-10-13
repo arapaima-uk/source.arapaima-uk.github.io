@@ -61,8 +61,8 @@ Customising themes in Hugo works by adding files to the root, or "working direct
 
 Likewise, we can override the pre-canned sidebar content by copying the file `sidebar.html` from  `\source.arapaima-uk.github.io\themes\lanyon-hugo\layouts\partials` to our own `\arapaima-uk.github.io\layouts\partials` folder. I made quite a few changes to this file, you can check them out directly on github here.
 
-Now is a good time to have another look at the `config.toml` file that defines much of the behaviour of the site. The first section holds a few site-wide configuration items, whilst the `[params]` section holds variables that can be used by the templates that make up our theme. (changes in this file don't get read until the site is rebuilt, so if you are using `hugo server` to follow along you'll need to restart it.)
-`````
+Now is a good time to have another look at the `config.toml` file that defines much of the behaviour of the site. The first section holds a few site-wide configuration items, whilst the `[params]` section holds variables that can be used by the templates that make up our theme. (_some_ changes in this file don't get read until the site is rebuilt, so if you are using `hugo server` to follow along you _may_ need to restart it.)
+```
 languageCode = "en-gb"
 baseurl = "http://arapaima.uk/"
 title = "Arapaima (UK)"
@@ -72,23 +72,59 @@ theme = "lanyon-hugo"
     Title = "arapaima.uk"
     Tagline =  "Data, Databases, Delivery"
     Author  = "Gavin Campbell"
-`````
+```
 ### Static Pages
 
 These are often used for "About me" or similar, I don't have one of those yet so we'll make do with the file that contains the source for this article. This is a markdown file called `BlogSetup.md`, that goes in the `\content\fixed\` folder of our working directory. There is a bit of metadata at the top, enclosed by plus signs, again in TOML format. The interesting items here are `sidebar="true"`, which will create a link in the sidebar for this page, and `weight = "10"`, which sets the relative ordering of sidebar items (heaviest weights sink to the bottom.) 
-`````
+``` 
 +++
 title = "Building this Site"
 sidebar =  true
 weight =  "10"
 +++
-`````
+```
 
 ### A First Post
 
 This is just a markdown file with a bit of front matter that goes in the `/content/post` folder.
 
+### Syntax highlighting
+
+For this site, we'll use server-side (i.e. pre-processed) syntax highlighting with [Pygments](http://pygments.org/). This requires installing [Python](https://www.python.org/downloads/), then running `pip install pygments` to install the module. You can run `pygmentize -h` to make sure everything is working, and that Hugo is able to find the command in your path. You can list the installed pygments styles with `pygmentize -L styles`. This turned out to be important, as the hugo default (monokai) turned out to be almost invisble against the background created by the lanyon theme. I decided on the "lovelace" theme, and set this by adding 
+```
+PygmentsCodeFences = "true"
+PygmentsStyle = "lovelace"
+```
+to the `config.toml` file. The first line allows specifying a style in markdown directly after the \`\`\` , for example the following block is styled ```` ```c ````.
+
+``` c
+#include <stdio.h>
+main()
+{
+    printf("Hello, world!\n");
+}
+```
+
 ## Github
 
-We've got enough for a working site, time for a first commit. Before we start, we'll add a `.gitignore` file to the `public` folder of the site containing a single `*` ; this is where the generated output ends up. We don't want to track the contents of this folder in github, the only place we need this is on the public site itself. Now we just need to `git init`, hook our local repo up to git hub with `git remote add` and push our first commit.
+We've got enough for a working site, time for a first commit. Before we start, we'll add a `.gitignore` file to the `public` folder of the site containing a single `*` ; this is where the generated output ends up. We don't want to track the contents of this folder in Github, the only place we need this is on the public site itself. Now we just need to `git init`, hook our local repo up to Github with 
+```
+git remote add origin https://github.com/arapaima-uk/source.arapaima-uk.github.io.git
+git branch --set-upstream master origin/master
+git add .
+git commit -m "WItty commit message goes here"
+git push
+```
+## Travis CI
 
+``` c
+/* Hello World program */
+
+#include<stdio.h>
+
+main()
+{
+    printf("Hello World");
+
+}
+```
