@@ -135,18 +135,13 @@ I started with the following lines in mine:
 ``` yaml
 language: go
 sudo: required
-git:
-    submodules: false
-# Use sed to replace the SSH URL with the public URL, then initialize submodules
-before_install:
-    - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-    - git submodule update --init --recursive
+
 install: 
     - sudo pip install Pygments
     - go get -v github.com/spf13/hugo
 script:
   - hugo
 ```
-This will download and install pygments and hugo, then call the `hugo` executable to build our site. The git submodules business I learned from a [gist](https://gist.github.com/petrbel/c3bf7e0f59c22a52f534), this is to allow travis to use https to access the submodule even though it is using ssh to access the main source repo.
+This will download and install pygments and hugo, then call the `hugo` executable to build our site. Unfortunately the version of hugo fetched by `go get` turned out to be ahead of it's time, and was unable to build this site. The solution 
 
 Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.

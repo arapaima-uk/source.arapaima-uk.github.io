@@ -1,7 +1,7 @@
 addons:
   apt:
     packages:
-    - hugo-0.17
+    - hugo
 
 
 install: 
