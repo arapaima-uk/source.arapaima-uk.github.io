@@ -75,7 +75,7 @@ theme = "lanyon-hugo"
 ```
 ### Static Pages
 
-These are often used for "About me" or similar, I don't have one of those yet so we'll make do with the file that contains the source for this article. This is a markdown file called `BlogSetup.md`, that goes in the `\content\fixed\` folder of our working directory. There is a bit of metadata at the top, enclosed by plus signs, again in TOML format. The interesting items here are `sidebar="true"`, which will create a link in the sidebar for this page, and `weight = "10"`, which sets the relative ordering of sidebar items (heaviest weights sink to the bottom.) 
+These are often used for "About me" or similar, I don't have one of those yet so we'll make do with the [file that contains the source for this article](https://raw.githubusercontent.com/arapaima-uk/source.arapaima-uk.github.io/master/content/fixed/BlogSetup.md). This is a markdown file called `BlogSetup.md`, that goes in the `\content\fixed\` folder of our working directory. There is a bit of metadata at the top, enclosed by plus signs, again in TOML format. The interesting items here are `sidebar="true"`, which will create a link in the sidebar for this page, and `weight = "10"`, which sets the relative ordering of sidebar items (heaviest weights sink to the bottom.) 
 ``` 
 +++
 title = "Building this Site"
@@ -86,7 +86,7 @@ weight =  "10"
 
 ### A First Post
 
-This is just a markdown file with a bit of front matter that goes in the `/content/post` folder.
+This is just a [markdown file](https://raw.githubusercontent.com/arapaima-uk/source.arapaima-uk.github.io/master/content/post/2016-10-13-verschlimmbesserung.md) with a bit of front matter (title, date) that goes in the `/content/post` folder.
 
 ### Syntax highlighting
 
@@ -95,7 +95,7 @@ For this site, we'll use server-side (i.e. pre-processed) syntax highlighting wi
 PygmentsCodeFences = "true"
 PygmentsStyle = "lovelace"
 ```
-to the `config.toml` file. The first line allows specifying a style in markdown directly after the \`\`\` , for example the following block is styled ```` ```c ````.
+to the `config.toml` file. The `PygmentsCodeFences` line allows specifying a style in markdown directly after the ```` ``` ```` , for example the following block is styled ```` ```c ````.
 
 ``` c
 #include <stdio.h>
