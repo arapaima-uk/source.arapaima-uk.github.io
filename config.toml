@@ -1,5 +1,5 @@
 languageCode = "en-gb"
-baseurl = "http://arapaima.uk"
+baseurl = "http://arapaima.uk/"
 title = "Arapaima (UK)"
 theme = "lanyon-hugo"
 PygmentsCodeFences = "true"
