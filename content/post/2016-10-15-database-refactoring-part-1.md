@@ -2,6 +2,7 @@
 title=  "Refactoring Databases with SSDT"
 date =  "2016-10-15"
 tags = "Refactoring, SSDT"
+draft = true
 +++
 
 The book [Refactoring Databases](http://databaserefactoring.com/) by Scott Ambler and Pramod Sadalage, first published over ten years ago, is something of a modern classic in the field of agile database delivery.  The authors give a definition (in fact taken from an [earlier book](http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0471202835.html)) of a database refactoring as
