@@ -6,7 +6,7 @@ weight =  "10"
 
 # Overview
 
-This blog is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed.
+This blog is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed. For now this is an [MVP](http://dilbert.com/strip/2016-06-21), I'll add more moving parts and update this page accordingly as time goes on.
 
 ## Github setup
 
@@ -15,7 +15,7 @@ To publish a personal or organizational site on GitHub Pages, all that is requir
 ## Hugo
 
 ### Getting Hugo
-I started by downloading the latest release (v0.17) from [hugo's github releases page](https://github.com/spf13/hugo/releases). I followed the [instructions here](https://gohugo.io/tutorials/installing-on-windows/) to create the folders `D:\Hugo\bin` and `D:\Hugo\Sites`, and extracted the contents of the downloaded zip file to `D:\Hugo\bin`. I also renamed `hugo_0.17_windows_amd64.exe` to `hugo.exe`. Running `hugo help` from the bin folder is the easiest way to check that everything is working. Optionally, add the `hugo\bin` folder to your system path to avoid having to type the full path to the executaable every time.
+I started by downloading the latest release (v0.17) from [hugo's github releases page](https://github.com/spf13/hugo/releases). I followed the [instructions here](https://gohugo.io/tutorials/installing-on-windows/) to create the folders `D:\Hugo\bin` and `D:\Hugo\Sites`, and extracted the contents of the downloaded zip file to `D:\Hugo\bin`. I also renamed `hugo_0.17_windows_amd64.exe` to `hugo.exe`. Running `hugo help` from the bin folder is the easiest way to check that everything is working. Optionally, add the `hugo\bin` folder to your system path to avoid having to type the full path to the executable every time.
 
 ### Scaffolding the site
 
@@ -59,7 +59,7 @@ You should now be able to run `hugo server` from the root of your site, and view
 
 Customising themes in Hugo works by adding files to the root, or "working directory" of your site that override their counterparts inside the theme folder itself. This means that in order to override the favicons stored at `arapaima-uk.github.io\themes\lanyon-hugo\static\assets` , we create an `assets` folder under the `source.arapaima-uk.github.io\static` folder in our site and add our own `favicon.ico` as well as the all-important `apple-touch-icon-144-precomposed.png` (I have no idea what this does).
 
-Likewise, we can override the pre-canned sidebar content by copying the file `sidebar.html` from  `\source.arapaima-uk.github.io\themes\lanyon-hugo\layouts\partials` to our own `\arapaima-uk.github.io\layouts\partials` folder. I made quite a few changes to this file, you can check them out directly on github here.
+Likewise, we can override the pre-canned sidebar content by copying the file `sidebar.html` from  `\source.arapaima-uk.github.io\themes\lanyon-hugo\layouts\partials` to our own `\arapaima-uk.github.io\layouts\partials` folder. I made quite a few changes to this file, you can check them out directly on github [here](https://github.com/arapaima-uk/source.arapaima-uk.github.io/blob/master/layouts/partials/sidebar.html).
 
 Now is a good time to have another look at the `config.toml` file that defines much of the behaviour of the site. The first section holds a few site-wide configuration items, whilst the `[params]` section holds variables that can be used by the templates that make up our theme. (_some_ changes in this file don't get read until the site is rebuilt, so if you are using `hugo server` to follow along you _may_ need to restart it.)
 ```
@@ -107,24 +107,22 @@ main()
 
 ## Github
 
-We've got enough for a working site, time for a first commit. Before we start, we'll add a `.gitignore` file to the `public` folder of the site containing a single `*` ; this is where the generated output ends up. We don't want to track the contents of this folder in Github, the only place we need this is on the public site itself. Now we just need to `git init`, hook our local repo up to Github with 
+We've got enough for a working site, time for a first commit. Before we start, we'll add a `.gitignore` file to the `public` folder of the site containing the following lines:
+```
+*
+*/
+!.gitignore
+```
+Since this is where the generated output ends up, we don't want to track the contents of this folder in our source repo on Github, the only place we need these files is on the public site itself. The three lines are telling git to ignore, respectively, all files in this folder, all files in subfolders of this folder, but not this `.gitignore` file itself. 
+
+
+Now we just need to `git init`, hook our local repo up to Github with 
 ```
 git remote add origin https://github.com/arapaima-uk/source.arapaima-uk.github.io.git
 git branch --set-upstream master origin/master
 git add .
-git commit -m "WItty commit message goes here"
+git commit -m "Witty commit message goes here"
 git push
 ```
 ## Travis CI
 
-``` c
-/* Hello World program */
-
-#include<stdio.h>
-
-main()
-{
-    printf("Hello World");
-
-}
-```
