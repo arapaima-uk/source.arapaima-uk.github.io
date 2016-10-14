@@ -1,6 +1,6 @@
 +++
 title=  "Verschlimmbesserung"
-Date =  "2016-10-13"
+date =  "2016-10-13"
 draft=  false
 +++
 
