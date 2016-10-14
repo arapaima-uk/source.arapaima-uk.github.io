@@ -6,7 +6,7 @@ PygmentsCodeFences = "true"
 PygmentsStyle = "lovelace"
 
 [params]
-    DateForm =  "2006-_1-_2"
+    DateForm =  "2006-1-2"
     Title = "arapaima.uk"
     Tagline =  "Data, Databases, Delivery"
     Author  = "Gavin Campbell"
