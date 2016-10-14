@@ -7,6 +7,7 @@ PygmentsStyle = "lovelace"
 
 [params]
     DateForm =  "2006-01-02"
+    DateFormat =  "2006-01-02"
     Title = "arapaima.uk"
     Tagline =  "Data, Databases, Delivery"
     Author  = "Gavin Campbell"
