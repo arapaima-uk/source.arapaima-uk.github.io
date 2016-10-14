@@ -4,7 +4,8 @@ title = "Arapaima (UK)"
 theme = "lanyon-hugo"
 PygmentsCodeFences = "true"
 PygmentsStyle = "lovelace"
-[Params]
+
+[params]
     DateForm =  "2006-01-02"
     Title = "arapaima.uk"
     Tagline =  "Data, Databases, Delivery"
