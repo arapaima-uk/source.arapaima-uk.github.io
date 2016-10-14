@@ -129,3 +129,18 @@ git push
 After signing into Travis CI with Github credentials, you need to flick the switch to enable Travis to access your source repository. There are a couple of extra setting hidden behind the little cog in the list of repos, notably "Build Only if .travis.yml is present" (set this to "on"), "Build Pushes" (set to "on"), and "Build Pull Requests (I set this to "off". I'm not taking pull requests right now...)
 
 Next, we need to create a `.travis.yml` file in the root of the source repository.
+
+I started with the following lines in mine
+
+``` yaml
+language: go
+sudo: required
+install: 
+    - sudo pip install Pygments
+    - go get -v github.com/spf13/hugo
+script:
+  - hugo
+```
+
+
+Now, when you commit and push the repo with the `.travis.yml` file included
