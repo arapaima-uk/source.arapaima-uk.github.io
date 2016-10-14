@@ -67,7 +67,7 @@ languageCode = "en-gb"
 baseurl = "http://arapaima.uk/"
 title = "Arapaima (UK)"
 theme = "lanyon-hugo"
-[Params]
+[params]
     DateForm =  "2006-01-02"
     Title = "arapaima.uk"
     Tagline =  "Data, Databases, Delivery"
