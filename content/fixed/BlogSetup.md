@@ -129,18 +129,24 @@ git push
 After signing into Travis CI with Github credentials, you need to flick the switch to enable Travis to access your source repository. There are a couple of extra setting hidden behind the little cog in the list of repos, notably "Build Only if .travis.yml is present" (set this to "on"), "Build Pushes" (set to "on"), and "Build Pull Requests (I set this to "off". I'm not taking pull requests right now...)
 
 Next, we need to create a `.travis.yml` file in the root of the source repository.
-
-I started with the following lines in mine
+### Build
+I started with the following lines in mine:
 
 ``` yaml
 language: go
 sudo: required
+git:
+    submodules: false
+# Use sed to replace the SSH URL with the public URL, then initialize submodules
+before_install:
+    - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+    - git submodule update --init --recursive
 install: 
     - sudo pip install Pygments
     - go get -v github.com/spf13/hugo
 script:
   - hugo
 ```
+This will download and install pygments and hugo, then call the `hugo` executable to build our site. The git submodules business I learned from a [gist](https://gist.github.com/petrbel/c3bf7e0f59c22a52f534), this is to allow travis to use https to access the submodule even though it is using ssh to access the main source repo.
 
-
-Now, when you commit and push the repo with the `.travis.yml` file included
+Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
