@@ -10,4 +10,4 @@ install:
     - sudo pip install Pygments
     - go get -v github.com/spf13/hugo
 script:
-  - hugo
+  - hugo -v
