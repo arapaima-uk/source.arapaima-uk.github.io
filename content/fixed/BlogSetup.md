@@ -4,10 +4,29 @@ sidebar =  true
 weight =  "10"
 draft = false
 +++
+<!-- TOC -->
 
+- [Overview](#overview)
+    - [Github setup](#github-setup)
+    - [Hugo](#hugo)
+        - [Getting Hugo](#getting-hugo)
+        - [Scaffolding the site](#scaffolding-the-site)
+        - [Themes](#themes)
+            - [Customising the Theme](#customising-the-theme)
+        - [Static Pages](#static-pages)
+        - [A First Post](#a-first-post)
+        - [Syntax highlighting](#syntax-highlighting)
+    - [Github](#github)
+    - [Travis CI](#travis-ci)
+        - [Build](#build)
+        - [Deploy](#deploy)
+        - [DNS stuff](#dns-stuff)
+- [Profit!](#profit)
+
+<!-- /TOC -->
 # Overview
 
-This blog is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed. For now this is an [MVP](http://dilbert.com/strip/2016-06-21), I'll add more moving parts and update this page accordingly as time goes on. There are a couple of features right "out of the box" such as drafts and scheduled posts.
+This site is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed. For now this is an [MVP](http://dilbert.com/strip/2016-06-21), I'll add more moving parts and update this page accordingly as time goes on. There are a couple of features right "out of the box" such as drafts and scheduled posts.
 
 ## Github setup
 
@@ -143,9 +162,9 @@ install:
 script:
   - hugo -v
 ```
-This will download and install pygments and hugo, then call the `hugo` executable to build our site. 
+This will download and install pygments and hugo, then call the `hugo` executable to build our site. One detail here is that I'm fetching a specific version of hugo; I initially tried fetching the latest with `go get`, but this seemed to result in compatibility nightmares.
 
-Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
+Now, when we commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
 
 ### Deploy
 
@@ -197,7 +216,7 @@ git push -q upstream HEAD:master
 
 If you're using a custom domain, now is a good time to log into your DNS provider and follow the steps [here](https://help.github.com/articles/using-a-custom-domain-with-github-pages/). It took a while for my ISP to get the change, clearly their DNS servers don't get up as early on a Saturday as I do.
 
-## Profit!
+# Profit!
 
 Having got to here, we definitely want to have one of those build status buttons in the sidebar of our site.
 
