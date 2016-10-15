@@ -133,15 +133,15 @@ Next, we need to create a `.travis.yml` file in the root of the source repositor
 I started with the following lines in mine:
 
 ``` yaml
-language: go
 sudo: required
-
 install: 
-    - sudo pip install Pygments
-    - go get -v github.com/spf13/hugo
+  - wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17-64bit.deb
+  - sudo dpkg -i hugo_0.17-64bit.deb
+  - sudo pip install Pygments
+   
 script:
-  - hugo
+  - hugo -v
 ```
-This will download and install pygments and hugo, then call the `hugo` executable to build our site. Unfortunately the version of hugo fetched by `go get` turned out to be ahead of it's time, and was unable to build this site. The solution 
+This will download and install pygments and hugo, then call the `hugo` executable to build our site. Unfortunately the version of hugo fetched by `go get` turned out to be ahead of its time, and was unable to build this site. The solution turned out to be to download a specific version directly from Github and install it with dpkg
 
 Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
