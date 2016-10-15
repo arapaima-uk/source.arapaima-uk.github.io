@@ -153,7 +153,7 @@ Most of the instructions in this part are based on [this](http://www.steveklabni
 
 This needs to be pasted into an environment variable named GH_TOKEN in the settings of your repo on Travis CI, there is a switch for "Display value in build log", which you want to have set to "off". 
 
-The next step uses the Travis command line ruby gem, you'll need to install ruby followed by `gem install travis` if you haven't got this already. If you do this from the root directory of your repo, the key will be automatically added to your `.travis.yml` file. It's safe to have this in your source repo, as it can only be decrypted using the private key - which you supplied to Travis in the previous step.
+The next step uses the Travis command line ruby gem, you'll need to install ruby followed by `gem install travis` if you haven't got this already. If you do this from the root directory of your repo, the key will be automatically added to your `.travis.yml` file.
 
 ```
 travis encrypt -r username/reponame GH_TOKEN=[the token you created before] --add
