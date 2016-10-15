@@ -12,7 +12,7 @@ env:
   - GIT_DEPLOY_DIR=public # this is the default output dir of Hugo
   - GIT_DEPLOY_BRANCH=master # this is the target branch, replace by gh-pages for Project Pages
   - GIT_DEPLOY_USERNAME="Travis CI" # dummy name
-  - GIT_DEPLOY_REPO = "arapaima-uk/arapaima-uk.github.io"
+  - GIT_DEPLOY_REPO = arapaima-uk/arapaima-uk.github.io
   - GIT_DEPLOY_EMAIL=user@example.com # replace by your email
     
   secure: pXz2d+gAeZW06yC1tVUVt2h/XafpHixPZnjkbKaISIk1ZEgjw8UmDX7VsUad/n6jcAPpf9N4zYG9bOHLkVu2EHs0IYrxvjnyqkyaFiQlqdnpt2WpEuKrpDYRHbfKXG7aBId+WJp1viOHf3vsd4KBFvObZI+FH/aEgFEopWGcE5Q15C4TEgP7gSUW9Xunp/T0G0sds19WuPrrL46yhDI+NpOor098MM/vYFmv3oIPkzmjLcl8VfykmCkihU0DA+jQ1Ra3rRzgZZ10Z1BOx8m5czZACo8tmeoK0yHz62jdPd9IGgx5Lb6lDUZI2lvS/0rEuRgG2o8uLaUWeZgOrNXtOxWqcvLZdYf3qWNEzBBKCIR2BgC3C2lbyKP7b+jiYWSXVIppDcLWYtqfg5zTP/NGqTWOAfeiZIx6jR3RbLg/FWar1RTlMlnO+BiJBKEL8/W5Xa8en0tWjBUZ4a2mVBHNEu+DklUykS1mEzv7wVjG0RKyh4uvJ08AyEiR/ebRh2NoTm8jQ9XX+svsItuKN6N8FgQ0KGyjwY53r4OuCDT2abxh1Af5B785oN5ikfDib2g1mS4jp1iN4v2FRa3PbMnos2/b20Mz2x6w+YsNytQS49H37dqYvxEcSGPwTsG2Bcoz+nPQYRtbqg5y7P9frh5OZniuD3GPLjhGy449BcDynIM=
