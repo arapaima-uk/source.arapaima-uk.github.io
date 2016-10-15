@@ -147,6 +147,53 @@ This will download and install pygments and hugo, then call the `hugo` executabl
 
 Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
 
-create gh key
-travis encrypt
-download script from https://github.com/X1011/git-directory-deploy
+### Deploy
+
+Most of the instructions in this part are based on [this](http://www.steveklabnik.com/automatically_update_github_pages_with_travis_example/) article. There are a few security hoops to jump through here. You need to create a Github Access Token [here](https://github.com/settings/tokens/new), which Travis will use to authenticate to the Github Pages repo. The scope of the token needs to be "repo". You need to paste this into another window straight away, as Github will only show it to you once.
+
+This needs to be pasted into an environment variable named GH_TOKEN in the settings of your repo on Travis CI, there is a switch for "Display value in build log", which you want to have set to "off". 
+
+The next step uses the Travis command line ruby gem, you'll need to install ruby followed by `gem install travis` if you haven't got this already. If you do this from the root directory of your repo, the key will be automatically added to your `.travis.yml` file. It's safe to have this in your source repo, as it can only be decrypted using the private key - which you supplied to Travis in the previous step.
+
+```
+travis encrypt -r username/reponame GH_TOKEN=[the token you created before] --add
+```
+Finally we need a deploy script to copy the files from Travis back to the Github pages repo. The following script, in the root of the repo, does the following:
+  - Saves the hash at the head of the source repo to use in the commit message for the target
+  - Deletes the `.gitignore` file so that our content pages don't get ignored when we push to the new site (ask me how I figure this out...)
+  - Creates a _new_ git repo to hook up to our target.
+  - Writes the CNAME file needed by GitHub pages to redirect our `.github.io` name to our "real" domain name. If this is currently pointing somewhere else at your DNS provider, your site will be hosed after you do this as your `github.io` name will redirect your "real" name, which is still pointing somewhere else! If you encounter problems here it's probably best to delete this line until everything is working again.
+  - Touches every file in the repo so they look "new".
+  - Pushes the pages to our GH Pages Repo
+
+
+``` bash
+#!/usr/bin/env bash
+
+rev=$(git rev-parse --short HEAD)
+
+cd public
+rm .gitignore
+
+git init
+git config user.name "Travis CI"
+git config user.email "travis@arapaima.uk"
+
+git remote add upstream "https://$GH_TOKEN@github.com/arapaima-uk/arapaima-uk.github.io.git"
+git fetch upstream
+git reset upstream/master
+
+echo "arapaima.uk" > CNAME
+
+touch .
+
+git add -A .
+git commit -m "rebuild pages at ${rev}"
+git push -q upstream HEAD:master
+```
+
+### DNS stuff
+
+If you're using a custom domain, now is a good time to log into your DNS provider and follow the steps [here](https://help.github.com/articles/using-a-custom-domain-with-github-pages/). It took a while for my ISP to get the change, clearly their DNS servers don't get up as early on a Saturday as I do.
+
+## Profit!
