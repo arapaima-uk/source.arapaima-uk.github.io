@@ -2,7 +2,7 @@
 title = "Building this Site"
 sidebar =  true
 weight =  "10"
-draft = true
+draft = false
 +++
 
 # Overview
