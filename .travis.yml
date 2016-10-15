@@ -1,3 +1,4 @@
+sudo: false
 addons:
   apt:
     packages:
@@ -5,7 +6,7 @@ addons:
 
 
 install: 
-    - sudo pip install Pygments
+    - pip install Pygments
    
 script:
   - hugo -v
