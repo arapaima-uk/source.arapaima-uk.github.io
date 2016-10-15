@@ -5,7 +5,9 @@ weight =  "9"
 draft = false
 +++
 
-I'm a database developer specialised in improving working practices in database delivery through the use of tools such as [SQL Server Data Tools](https://blogs.msdn.microsoft.com/ssdt/), [tSQLt](http://tsqlt.org/), [Visual Studio Team Services](https://www.visualstudio.com/team-services/), [Git](https://git-scm.com/) and [Jenkins](https://jenkins.io/), on platforms such as [AWS](https://aws.amazon.com/) and [Microsoft Azure](https://azure.microsoft.com).
+I'm a database developer specialised in improving working practices in database delivery through the use of tools such as [SQL Server Data Tools](https://blogs.msdn.microsoft.com/ssdt/), [tSQLt](http://tsqlt.org/), [Visual Studio Team Services](https://www.visualstudio.com/team-services/), [Git](https://git-scm.com/) and [Jenkins](https://jenkins.io/), on platforms such as [AWS](https://aws.amazon.com/) and [Microsoft Azure](https://azure.microsoft.com), and methodologies such as Continuous Delivery and Agile. 
+
+As a strictly time-limited promotion, all purchases of "DevOps" made through this site will come with a voucher for a free "Big Data"[^1].
 
 I present at conferences and user groups now and then, as well as engaging in intermittent flurries of activity on StackOverflow.
 
@@ -20,4 +22,5 @@ You can get in touch with me about this site, any of the above topics, or anythi
     <input type="text" name="_gotcha" style="display:none"/>
     <input type="submit" value="Send">
 </form> 
+[^1]: Conditions Apply
 
