@@ -5,7 +5,7 @@ install:
 - sudo pip install Pygments
 script:
 - hugo
-after_sucess:
+after_success:
 - bash deploy.sh
 env:
   global:
