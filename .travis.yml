@@ -1,8 +1,7 @@
-sudo: false
-addons:
-  apt:
-    packages:
-    - hugo
+sudo: true
+
+before_install:
+  - sudo apt-get install -y hugo=0.17
 
 
 install: 
