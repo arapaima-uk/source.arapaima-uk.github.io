@@ -2,6 +2,7 @@
 title = "Building this Site"
 sidebar =  true
 weight =  "10"
+draft = true
 +++
 
 # Overview
@@ -145,3 +146,7 @@ script:
 This will download and install pygments and hugo, then call the `hugo` executable to build our site. Unfortunately the version of hugo fetched by `go get` turned out to be ahead of its time, and was unable to build this site. The solution turned out to be to download a specific version directly from Github and install it with dpkg
 
 Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
+
+create gh key
+travis encrypt
+download script from https://github.com/X1011/git-directory-deploy
