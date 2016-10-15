@@ -197,3 +197,18 @@ git push -q upstream HEAD:master
 If you're using a custom domain, now is a good time to log into your DNS provider and follow the steps [here](https://help.github.com/articles/using-a-custom-domain-with-github-pages/). It took a while for my ISP to get the change, clearly their DNS servers don't get up as early on a Saturday as I do.
 
 ## Profit!
+
+Having got to here, we definitely want to have one of those build status buttons in the sidebar of our site.
+
+This can be done by adding the following to the template, substituting the name of your source repo (not the Github Pages one! as appropriate).
+
+``` html
+  <div class = "sidebar-item">
+  <p> <a href = "https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io">
+      <img src = "https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io.svg?branch=master" alt = "Travis CI Build Status" title = "Travis CI Build Status">
+      </a>
+    </p>
+  </div>
+  ```
+
+  In fact, I think I'll have one here too: [![Build Status](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io.svg?branch=master)](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io) You can get these links in various formats by clicking on the build status icon in the home page of your repo on Travis.
