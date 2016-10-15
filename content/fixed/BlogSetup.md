@@ -143,7 +143,7 @@ install:
 script:
   - hugo -v
 ```
-This will download and install pygments and hugo, then call the `hugo` executable to build our site. Unfortunately the version of hugo fetched by `go get` turned out to be ahead of its time, and was unable to build this site. The solution turned out to be to download a specific version directly from Github and install it with dpkg
+This will download and install pygments and hugo, then call the `hugo` executable to build our site. 
 
 Now, when you commit and push the repo with the `.travis.yml` file included, Travis will fetch our code and build our site. If this step isn't working, there's not much point continuing, so take a moment to ensure that everything is green. You will observe that Travis isn't all that fast; I got a car for free once and it wasn't all that fast either.
 
@@ -159,6 +159,7 @@ The next step uses the Travis command line ruby gem, you'll need to install ruby
 travis encrypt -r username/reponame GH_TOKEN=[the token you created before] --add
 ```
 Finally we need a deploy script to copy the files from Travis back to the Github pages repo. The following script, in the root of the repo, does the following:
+
   - Saves the hash at the head of the source repo to use in the commit message for the target
   - Deletes the `.gitignore` file so that our content pages don't get ignored when we push to the new site (ask me how I figure this out...)
   - Creates a _new_ git repo to hook up to our target.
