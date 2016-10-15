@@ -128,6 +128,8 @@ main() {
 		enable_expanded_output
 	fi
 
+    rm $deploy_directory/.gitignore
+    
 	# check if deploy_branch exists locally
 	if git show-ref --verify --quiet "refs/heads/$deploy_branch"
 	then incremental_deploy
