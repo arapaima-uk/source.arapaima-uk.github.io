@@ -2,6 +2,7 @@
 title=  "Database Pruning"
 date =  "2016-10-17"
 tags = "Refactoring, SSDT"
+series = "Refactoring Databases with SSDT"
 draft = true
 +++
 
@@ -14,7 +15,7 @@ Since SSDT operates in a declarative manner, each table is defined in a `CREATE 
 
 ![SSDT Broken Reference Error](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/ssdt-refactoring-part-1/DropColumnReferencedByProcedure.PNG "SSDT Broken Reference Error")
 
-The full text of the error message reads `SQL71501: Procedure [dbo.UpdateInvoiceBillingAddress] has an unresolved reference to object [dbo].[Invoice].[BillingPostalCode]`, and the offending reference in the stored procedure[^1] has acquired a "red squiggly". 
+The full text of the error message reads `SQL71501: Procedure [dbo.UpdateInvoiceBillingAddress] has an unresolved reference to object [dbo].[Invoice].[BillingPostalCode]`, and the offending reference in the stored procedure[^1] has acquired a "red squiggly". There's no "builtin" refactoring action defined in the right-click context menu for deletions,  
 
 
 

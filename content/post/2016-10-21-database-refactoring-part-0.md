@@ -2,6 +2,7 @@
 title=  "Refactoring Databases with SSDT"
 date =  "2016-10-21"
 tags = "Refactoring, SSDT"
+series = "Refactoring Databases with SSDT"
 draft = false
 +++
 
