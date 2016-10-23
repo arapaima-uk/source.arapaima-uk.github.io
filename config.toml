@@ -13,3 +13,4 @@ PygmentsStyle = "lovelace"
 
 [taxonomies]
     tag = "tags"
+    series = "series"
