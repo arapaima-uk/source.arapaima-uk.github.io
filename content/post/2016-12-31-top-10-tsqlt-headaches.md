@@ -1,7 +1,7 @@
 +++
 title=  "tSQLt problems and solutions"
 date =  "2016-12-31"
-tags = "tsqlt"
+tags = ["tsqlt"]
 draft = true
 +++
 Cant freetext search a faked table
