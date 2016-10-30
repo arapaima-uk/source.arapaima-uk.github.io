@@ -1,8 +1,8 @@
 +++
 title=  "Database Pruning"
 date =  "2016-10-25"
-tags = "Refactoring, SSDT"
-series = "Refactoring Databases with SSDT"
+tags = ["Refactoring", "SSDT"]
+series = ["Refactoring Databases with SSDT"]
 draft = false
 +++
 
