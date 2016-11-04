@@ -5,9 +5,9 @@ weight =  "9"
 draft = false
 +++
 
-I'm a database developer specialised in improving working practices in database delivery through the use of tools such as [SQL Server Data Tools](https://blogs.msdn.microsoft.com/ssdt/), [tSQLt](http://tsqlt.org/), [Visual Studio Team Services](https://www.visualstudio.com/team-services/), [Git](https://git-scm.com/) and [Jenkins](https://jenkins.io/), on platforms such as [AWS](https://aws.amazon.com/) and [Microsoft Azure](https://azure.microsoft.com), and methodologies such as Continuous Delivery and Agile. 
+I'm a freelance database developer specialised in improving working practices in database delivery through the use of tools such as [SQL Server Data Tools](https://blogs.msdn.microsoft.com/ssdt/), [tSQLt](http://tsqlt.org/), [Visual Studio Team Services](https://www.visualstudio.com/team-services/), [Git](https://git-scm.com/) and [Jenkins](https://jenkins.io/), on platforms such as [AWS](https://aws.amazon.com/) and [Microsoft Azure](https://azure.microsoft.com), and methodologies such as Continuous Delivery and Agile. 
 
-I present at conferences and user groups now and then, as well as engaging in intermittent flurries of activity on StackOverflow.
+I [present at conferences and user groups now and then]({{< relref "fixed/Speaking.md">}}), as well as engaging in intermittent flurries of activity on [StackOverflow](http://stackoverflow.com/users/1100346/gavin-campbell).
 
 You can get in touch with me about this site, any of the above topics, or anything else at all by completing the form below.
 

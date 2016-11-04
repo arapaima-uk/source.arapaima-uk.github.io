@@ -1,10 +1,10 @@
 +++
 title = "Speaking Engagements"
-draft = true
+draft = false
 +++
 
 ## Upcoming
-
+> Watch this space...
 ## Past
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
@@ -18,5 +18,6 @@ draft = true
 |5 September 2013|Data Loading with CDC and SSIS|[Manchester SQL Server User Group](http://manssug.sqlpass.org)
 |4 September 2013|Data Loading with CDC and SSIS|[Leeds SQL Server User Group](https://sqlserverfaq.com/blog/2016/10/09/leeds-sql-server-user-group/)
 |3 September 2013|Data Loading with CDC and SSIS|[Newcastle SQL Server User Group](http://manssug.sqlpass.org)
+|30 May 2013|Data Loading with CDC and SSIS|[SQL Cardiff](http://www.meetup.com/Cardiff-SQL-Server-User-Group/)
 |6 March 2013|Putting it all together with SSDT|[Southampton SQL Server User Group](http://sqlsoton.org/)
 |17 January 2013|Putting it all together with SSDT|[Midlands SQL Server User Group](http://www.sqlmidlands.com)
