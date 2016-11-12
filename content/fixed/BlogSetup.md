@@ -3,27 +3,9 @@ title = "Building this Site"
 sidebar =  true
 weight =  "10"
 draft = false
+toc = true
 +++
-<!-- TOC -->
 
-- [Overview](#overview)
-    - [Github setup](#github-setup)
-    - [Hugo](#hugo)
-        - [Getting Hugo](#getting-hugo)
-        - [Scaffolding the site](#scaffolding-the-site)
-        - [Themes](#themes)
-            - [Customising the Theme](#customising-the-theme)
-        - [Static Pages](#static-pages)
-        - [A First Post](#a-first-post)
-        - [Syntax highlighting](#syntax-highlighting)
-    - [Github](#github)
-    - [Travis CI](#travis-ci)
-        - [Build](#build)
-        - [Deploy](#deploy)
-        - [DNS stuff](#dns-stuff)
-- [Profit!](#profit)
-
-<!-- /TOC -->
 # Overview
 
 This site is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed. For now this is an [MVP](http://dilbert.com/strip/2016-06-21), I'll add more moving parts and update this page accordingly as time goes on. There are a couple of features right "out of the box" such as drafts and scheduled posts.

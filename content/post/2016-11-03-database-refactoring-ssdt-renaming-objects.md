@@ -10,9 +10,16 @@ Continuing our horticultural theme, in this article we'll look at the built-in s
 
 ![That which we call a rose. By any other name would smell as sweet](https://upload.wikimedia.org/wikipedia/commons/6/66/Rosa_laxa.jpg "That which we call a rose. By any other name would smell as sweet")
 
-## Renaming a column
+## Renaming columns
 
-We can rename a column just by right-clicking in the table definition and selecting Refactor &rarr; Rename. Under normal circumstances, renaming the Primary Key of a table such as "Invoices" would be a recipe for disaster, but SSDT can help to ease such changes by automatically updating all references to the column to use the new name. In this case we are renaming the column InvoiceId to Invoice_Id, and by specifying the option to preview the changes, we can see a list of all the objects that reference this column by its old name.
+We can rename a column just by right-clicking in the `CREATE TABLE` script and selecting Refactor &rarr; Rename. 
+
+![Renaming the InvoiceId Column by right-clicking in the editor window](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/RefactorRenameSelected.PNG "Renaming the InvoiceId Column by right-clicking in the editor window" )
+
+Under normal circumstances, renaming the Primary Key column of a table such as "Invoices" would be a recipe for disaster, but SSDT can help to ease such changes by automatically updating all references to the column to use the new name. In this case we are renaming the column InvoiceId to Invoice_Id, and by specifying the option to preview the changes, we can see a list of all the objects that reference this column by its old name. 
+
+![SSDT shows a preview of which objects will be updated to refer to the new name](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/rename%20column%20preview.PNG "SSDT shows a preview of which objects will be updated to refer to the new name")
+
 
 There's something of note here, which is that _only_ the InvoiceId column from the Invoices table is being renamed, any other columns called InvoiceId (such as the one in the InvoiceLine table) are unaffected. The foreign key constraint on that particular column, however, _is_ updated to use the new name of the referenced column.
 
@@ -31,7 +38,7 @@ When we click apply, two things happen. The first is that all the references to 
   </Operation>
 </Operations>
 ```
-This refactorlog file is how SSDT will detemine _at deploy time_ that we are renaming this column from InvoiceID to Invoice_Id rather than dropping the InvoiceID column and creating a new column called Invoice_ID. This is known, in the jargon, as "preserving the intent" of the refactoring. If we build a project containing a `.refactorlog` file and examine the resulting `.dacpac`, we can see that the regular `.dacpac` contents have been joined by a `refactor.xml` file. The contents of this file are the same as the `.refactorlog` file from our solution.
+This file is how `sqlpackage.exe` (or SSDT publish, or DacFX.Deploy) will detemine _at deploy time_ that we are renaming this column from InvoiceID to Invoice_Id rather than dropping the InvoiceID column and creating a new column called Invoice_ID. We can see in the XML that this is specifying the column and table name, and the precise action to perform. This is known, in the jargon, as "preserving the intent" of the refactoring. If we build a project containing a `.refactorlog` file and examine the resulting `.dacpac`, we can see that the regular `.dacpac` contents have been joined by a `refactor.xml` file. 
 
 ``` bat
 $ unzip -l Refactoring.Chinook.dacpac
@@ -46,10 +53,7 @@ Archive:  Refactoring.Chinook.dacpac
 ---------                     -------
     71813                     5 files
 ```
-
-This file is what tells `sqlpackage.exe` (or SSDT publish, or DacFX.Deploy) what to do when it encounters this difference at deploy time.
-
-Apart from the XML gubbins, we can see that this is specifying the column and table name, and the precise action to perform.
+The contents of this file are the same as the `.refactorlog` file from our solution.
 
 When we publish the project we see the following output:
 ``` bat
@@ -61,13 +65,81 @@ Altering [dbo].[InvoicesWithLineTotals]...
 Altering [dbo].[UpdateInvoiceBillingAddress]...
 Update complete.
 ```
-The publish action has read the `refactorlog` file and taken the appropriate action.
+The publish action has read the `refactorlog` file and taken the appropriate action. In addition, the "key" for this refactoring has been stored in a new table in our database called `dbo._RefactorLog`, which gets created the first time we deploy a dacpac containing a `refactor.xml` file:
+``` sql
+-- Refactoring step to update target server with deployed transaction logs
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '209f3afd-7195-401f-853f-aa3a906d39db')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('209f3afd-7195-401f-853f-aa3a906d39db')
+```
+On subsequent deployments, this table is read and any refactorings recorded here are skipped from the deployment.
+
 
 There's another UI wrinkle here which is worth examining, so we will rename another column, this time using the table designer.
 
-Another entry has been added to the `refactorlog` file, and _without prompting_ the references to this column elsewhere in the model have been updatedd (note the red tick showing that `PlaylistTrack.sql` has been modified.)
+Another entry has been added to the `refactorlog` file, and it appears as if the references to this column elsewhere in the model have been updated (note the red tick showing that `PlaylistTrack.sql` and `InvoiceLine.sql` have been modified.)
+![Renaming a column using the table designer](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/Renaming%20a%20Column%20in%20the%20table%20designer.PNG "Renaming a column using the table designer")
+However, when we go to build the project, we get an error:
+```
+SQL71501: Procedure: [dbo].[ChangeTrackPriceByFactor] has an unresolved reference to object [dbo].[Track].[TrackId].	
+```
+(Alternatively, the error will appear in the SSDT UI as soon as the Intellisense catches up). There was a stored procedure referencing this column by name, which is now causing the build to fail (remember that [deferred name resolution works for table names but not for column names]({{< relref "post/2016-10-25-database-refactoring-ssdt-dropping-objects.md#dropping-a-table" >}}).
 
-Rename Table
+This is because of a detail of how foreign keys - and primary keys, for that matter - are maintained by SQL Server itself. If we look at the contents of `sys.foreign_key_columns`, there isn't a column name in sight (`sys.index_columns` looks much the same):
+
+|constraint_ object_id|constraint_ column_id|parent_ object_id|parent_ column_id|referenced_ object_id|referenced_ column_id|
+|---|---|---|---|---|---|
+|1045578763|1|885578193|3|565577053|1|
+|917578307|1|565577053|3|597577167|1|
+|965578478|1|725577623|2|629577281|1|
+|933578364|1|629577281|13|661577395|1|
+|...|...|...|...|...|...|
+
+
+If we fix the reference in our stored procedure and go on to generate a publish script, all we see for this change is 
+```sql
+PRINT N'The following operation was generated from a refactoring log file 8a905288-76de-4cc4-aad9-c6dddf081a17';
+
+PRINT N'Rename [dbo].[Track].[TrackId] to Track_Id';
+
+
+GO
+EXECUTE sp_rename @objname = N'[dbo].[Track].[TrackId]', @newname = N'Track_Id', @objtype = N'COLUMN';
+
+
+GO
+PRINT N'Altering [dbo].[ChangeTrackPriceByFactor]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[ChangeTrackPriceByFactor]
+	@TrackID int,
+	@Factor NUMERIC(10, 2)
+AS
+	UPDATE Track SET UnitPrice *= @Factor WHERE Track_Id = @TrackID;
+
+RETURN 0
+GO
+-- Refactoring step to update target server with deployed transaction logs
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '8a905288-76de-4cc4-aad9-c6dddf081a17')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('8a905288-76de-4cc4-aad9-c6dddf081a17')
+
+GO
+```
+
+The `refactorlog` is updated to include this change, but there are no changes deployed to any of the tables that referenced the `TrackId` column via foreign keys. This is because foreign keys - as noted above - don't _really_ use column names, they use object and column ids, so it is sufficient to rename the referenced column with `sp_rename`. Stored Procedures, triggers, and other programmable objects, however, *do* reference columns and tables by name - in `sys.sql_modules` - so these references aren't updated automatically.
+
+However, SSDT itself takes into consideration that when we rename a column referenced by a foreign (or primary) key, the definition required to create the constraint from scratch will need to be updated, which is why the files containing the referencing tables are all updated.
+
+This behaviour may seem inconsistent, but it is in fact consistent with the [behaviour of `sp_rename` itself](https://msdn.microsoft.com/en-gb/library/ms188351.aspx#Anchor_3 "MSDN documentation for sp_rename"), which is to say that constraints and indexes aren't broken by `sp_rename`, but stored procedures, triggers, etc. are.
+
+In contrast, renaming a column by editing the Transact-SQL file directly delivers the promised disaster; 
+
+## Renaming tables
+
+There are two options in the refactoring context menu that are relevant to naming tables; "Rename" and "Move to Schema". In some RDBMSs, notably [Oracle](https://docs.oracle.com/database/122/CNCPT/tables-and-table-clusters.htm#GUID-72E247B5-F39A-47F1-9445-72D9221F57E3 "Introduction to schema objects, Oracle 12.2"), the notion of a schema is tightly coupled to the notion of a user, such that the user account in question "owns" the tables and other objects contained therein. SQL Server implemented a similar concept prior to SQL Server 2005, when the [link between users and schemas was severed](https://technet.microsoft.com/en-us/library/dd283095.aspx "SQL Server Best Practices – Implementation of Database Object Schemas") such that a schema became more like a namespace, or even a filesystem folder, since a schema remains a securable object. Under either analogy - namespace or folder - the name of the schema can be considered to be a part of the (qualified) name of the table, meaning that moving an object to a new schema is merely a special case of renaming.
+
+![Right-click refactor menu for a table](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/refactoring-menu.PNG "Right-click Refactor menu for a table")
+
 
 Rename View
 

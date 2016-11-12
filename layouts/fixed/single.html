@@ -1,0 +1,15 @@
+{{ partial "default_head.html" . }}
+
+<div class="page">
+  <h1 class="page-title">{{ .Title }}</h1>
+
+{{ if .Params.toc }}
+    <div id="toc" >
+    {{ .TableOfContents }}
+    </div>
+  {{ end }}
+
+  {{ .Content }}
+</div>
+
+{{ partial "default_foot.html" . }}
