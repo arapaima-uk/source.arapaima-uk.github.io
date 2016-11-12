@@ -11,6 +11,8 @@ After a period of time in use, most databases, like many systems that have grown
  ![The gardener's assistant; a practical and scientific exposition of the art of gardening in all its branches (1910) (14761716416).jpg](https://upload.wikimedia.org/wikipedia/commons/7/70/The_gardener%27s_assistant%3B_a_practical_and_scientific_exposition_of_the_art_of_gardening_in_all_its_branches_%281910%29_%2814761716416%29.jpg "[By Internet Archive Book Images [No restrictions], via Wikimedia Commons]")
 
 ## Dropping a column
+> Refactoring Databases, p 72
+
 Since SSDT operates in a declarative manner, each table is defined in a `CREATE TABLE` script, and deleting a column is as simple as deleting the relevant line from the script. However, there are a couple of features of SSDT that are relevant here. If the column is referenced by any other database objects such as views, functions, or stored procedures, SSDT will display an error:
 
 ![SSDT Broken Reference Error](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/ssdt-refactoring-part-1/DropColumnReferencedByProcedure.PNG "SSDT Broken Reference Error")
@@ -25,6 +27,7 @@ What is possible, however, is to use the "find all references" tool _before_ del
 ![Find All References](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/ssdt-refactoring-part-1/findAllReferences.PNG "Find All References") 
 
 ## Dropping a table
+> Refactoring Databases, p 77
 
 This is where things get more serious. The same technique of using the "Find All References" tool to assess the damage we're about to do applies here, but there is a subtle difference in what happens when we actually brandish the pruning shears. It turns out that removing an entire table referenced by a stored procedure is only worthy of a warning or five rather than an error. This is due to an oddity of [deferred name resolution](https://technet.microsoft.com/en-us/library/ms190686.aspx) for stored procedures, namely that it is permitted to reference a non-existent table in the text of a stored procedure, but not permitted to reference a non-existent column in a table that _does_ exist.
 
@@ -34,7 +37,10 @@ Interestingly, if we convert our stored procedure to a user-defined function [^2
 
 ![Functions don't support deferred name resolution](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/ssdt-refactoring-part-1/FunctionsDontSupportDeferredNameResolution.PNG  "Functions don't support deferred name resolution")
 
+
+
 ## Dropping Programmable Objects (Views, Functions, Stored Procedures, other miscellany in [`sys.sql_modules`](https://msdn.microsoft.com/en-us/library/ms175081.aspx))
+>Refactoring Databases, p 79
 
 On the face of it this is simpler, as there is no data being thrown out with the bathwater.
 
@@ -74,6 +80,23 @@ In each case, the default is "true", meaning potentially destructive changes are
 
 In general, this should always be set to false, meaning "allow potentially destructive changes". This is unproblematic as long as production isn't the _first_ environment where you deploy your changes.
 
+Similarly, the default behaviour of SSDT is _not_ to drop objects that are in the target (i.e. the database) but not in the source (i.e. the database project). To allow these changes to be applied, we need to do one of the following.
+
+* For projects deployed using the Visual Studio "Publish" dialog, check "Drop objects in target but not in source" in the "Advanced Publish Settings" dialog available by clicking "Advanced" in the "Publish" dialog.
+
+* For projects deployed using `sqlpackage.exe`, we need to specify the parameter `/p:DropObjectsNotInSource=True`
+
+* For projects that use a publish profile to specify deployment options, we need to add the element ` <DropObjectsNotInSource>True</DropObjectsNotInSource>` to the `.publish.xml` file.
+
+### A note on "Drop objects not in source"
+
+If this option is selected, SSDT will drop _all_ objects from the target database that are not defined in the project. Rather inconveniently, this includes users, permissions - including, cruciallly, the `CONNECT` permission - and all the other things we need to be present for our application (or us!) to be able to connect to the database. Rather than specify all these items as part of the project, it is often simpler to ignore these at deployment time using the publish profile. The most important ones are probably users, permissions, roles, and role memberships, but anyone with a more obscure security model (Application Roles??) might want to investigate some of the other options.
+
+![Advanced Publish Settings showing drop objects](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-1/Options-for-drop-objects.PNG "Advanced Publish Settings showing drop objects")
+
+The difference between the "Drop" and "Ignore" settings is that the former apply _only_ to the target - so selecting object types here prevents objects of that type from being dropped. The "ignore" settings allow us to specify that objects of the selected types are not dropped in the target if they are absent from the source, but also not created or modified in the target even if they are present in the source.
+
+As above, these settings can also be specified as command-line arguments to `sqlpackage.exe` or as xml in a publish profile.
 
 
 

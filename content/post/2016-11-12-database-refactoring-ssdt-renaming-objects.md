@@ -1,9 +1,9 @@
 +++
 title=  "What's in a name?"
-date =  "2016-11-03"
+date =  "2016-11-12"
 tags = ["Refactoring", "SSDT"]
 series = ["Refactoring Databases with SSDT"]
-draft = true
+draft = false
 +++
 
 Continuing our horticultural theme, in this article we'll look at the built-in support in SSDT for renaming database objects including tables, columns, and programmable objects, as well as peering into the details of how these changes are managed at deployment time.
@@ -11,6 +11,9 @@ Continuing our horticultural theme, in this article we'll look at the built-in s
 ![That which we call a rose. By any other name would smell as sweet](https://upload.wikimedia.org/wikipedia/commons/6/66/Rosa_laxa.jpg "That which we call a rose. By any other name would smell as sweet")
 
 ## Renaming columns
+>Refactoring Databases, p 109
+
+### The easy way
 
 We can rename a column just by right-clicking in the `CREATE TABLE` script and selecting Refactor &rarr; Rename. 
 
@@ -24,6 +27,8 @@ Under normal circumstances, renaming the Primary Key column of a table such as "
 There's something of note here, which is that _only_ the InvoiceId column from the Invoices table is being renamed, any other columns called InvoiceId (such as the one in the InvoiceLine table) are unaffected. The foreign key constraint on that particular column, however, _is_ updated to use the new name of the referenced column.
 
 What this demonstrates is that there is something more than global search and replace going on here; SSDT is using its in-memory model of the database to determine which changes need to be made[^1].
+
+### The refactorlog
 
 When we click apply, two things happen. The first is that all the references to this column are updated to use the new name. The second is that a new file appears in the solution, with the extension `.refactorlog`.
 ``` xml
@@ -73,6 +78,7 @@ INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('209f3afd-7195-401f-853
 ```
 On subsequent deployments, this table is read and any refactorings recorded here are skipped from the deployment.
 
+### Appearances can be deceptive
 
 There's another UI wrinkle here which is worth examining, so we will rename another column, this time using the table designer.
 
@@ -132,16 +138,128 @@ However, SSDT itself takes into consideration that when we rename a column refer
 
 This behaviour may seem inconsistent, but it is in fact consistent with the [behaviour of `sp_rename` itself](https://msdn.microsoft.com/en-gb/library/ms188351.aspx#Anchor_3 "MSDN documentation for sp_rename"), which is to say that constraints and indexes aren't broken by `sp_rename`, but stored procedures, triggers, etc. are.
 
-In contrast, renaming a column by editing the Transact-SQL file directly delivers the promised disaster; 
+### The wrong way
+
+In contrast, renaming a column by editing the Transact-SQL file directly delivers the promised disaster, as SSDT will attempt to drop the column with the old name and create a new column with the new name.
+
+In the best-case scenario we get a validation error that stops the project from building, assuming the renamed column is referenced by some other object in the project.
+
+![Renaming a column by editing the .sql file](
+http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/renaming%20a%20key%20column%20in%20the%20sql%20file.PNG "Renaming a column by editing the .sql file]")
+
+In all other scenarios, the script executed at deploy time is as follows:
+``` sql
+PRINT N'Altering [dbo].[Genre]...';
+
+GO
+ALTER TABLE [dbo].[Genre] DROP COLUMN [Name];
+
+GO
+ALTER TABLE [dbo].[Genre]
+    ADD [GenreName] NVARCHAR (120) NULL;
+```
+
+The only safety net left at this point is the [BlockOnPossibleDataLoss]({{< relref "post/2016-10-25-database-refactoring-ssdt-dropping-objects.md#pulling-the-trigger-3" >}}) deploy-time option, which is enabled by default. This will stop the deployment from proceeding.
+```
+Msg 50000, Level 16, State 127, Line 48
+Rows were detected. The schema update is terminating because data loss might occur.
+** An error was encountered during execution of batch. Exiting.
+```
+
+
 
 ## Renaming tables
+>Refactoring Databases, p 113
 
 There are two options in the refactoring context menu that are relevant to naming tables; "Rename" and "Move to Schema". In some RDBMSs, notably [Oracle](https://docs.oracle.com/database/122/CNCPT/tables-and-table-clusters.htm#GUID-72E247B5-F39A-47F1-9445-72D9221F57E3 "Introduction to schema objects, Oracle 12.2"), the notion of a schema is tightly coupled to the notion of a user, such that the user account in question "owns" the tables and other objects contained therein. SQL Server implemented a similar concept prior to SQL Server 2005, when the [link between users and schemas was severed](https://technet.microsoft.com/en-us/library/dd283095.aspx "SQL Server Best Practices – Implementation of Database Object Schemas") such that a schema became more like a namespace, or even a filesystem folder, since a schema remains a securable object. Under either analogy - namespace or folder - the name of the schema can be considered to be a part of the (qualified) name of the table, meaning that moving an object to a new schema is merely a special case of renaming.
 
+### The right way
 ![Right-click refactor menu for a table](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/refactoring-menu.PNG "Right-click Refactor menu for a table")
 
+When we rename a table, we get the usual "refactor preview" showing the changes about to be applied to the project:
 
-Rename View
+![Refactor preview for renaming a table](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/Refactor%20renaming%20a%20table.PNG "Refactor preview for renaming a table")
+
+On clicking apply, the relevant objects are updated and a new entry is inserted into the `refactorlog` file:
+```xml
+<Operation Name="Rename Refactor" Key="cce28c30-adb0-4019-876e-d93cc2ca0011" ChangeDateTime="11/12/2016 14:22:18">
+   <Property Name="ElementName" Value="[dbo].[Artist]" />
+   <Property Name="ElementType" Value="SqlTable" />
+   <Property Name="ParentElementName" Value="[dbo]" />
+   <Property Name="ParentElementType" Value="SqlSchema" />
+   <Property Name="NewName" Value="[Artiste]" />
+ </Operation>
+  ```
+The process for moving a table between schemas is similar, we are presented with a preview of the changes about to be made:
+
+![Refactor preview for move to schema](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/move%20to%20schema%20preview.PNG "Refactor preview for move to schema")
+
+and a new entry is made in the `refactorlog` file.
+
+```xml
+<Operation Name="Move Schema"Key="985e03c6-37f8-48c8-8ce8-5ed37fbb7c00"ChangeDateTime="11/12/2016 14:46:31">
+  <Property Name="ElementName" Value="[dbo].[Invoice]" />
+  <Property Name="ElementType" Value="SqlTable" />
+  <Property Name="NewSchema" Value="Sales" />
+  <Property Name="IsNewSchemaExternal" Value="False" />
+</Operation>
+  ```
+Finally, when we come to deploy our change, the table is moved to the new schema and all the referencing objects are updated:
+
+```
+PRINT N'The following operation was generated from a refactoring log file 985e03c6-37f8-48c8-8ce8-5ed37fbb7c00';
+
+PRINT N'Move object [dbo].[Invoice] to different schema [Sales]';
+
+GO
+ALTER SCHEMA [Sales] TRANSFER [dbo].[Invoice];
+
+GO
+ALTER VIEW [dbo].[InvoicesWithLineTotals] 
+	AS SELECT I.[Invoice_Id],
+	InvoiceTotal
+	FROM [Sales].Invoice AS I CROSS APPLY dbo.CalculateInvoiceTotal(I.[Invoice_Id]);
+GO
+```
+
+### The wrong way
+
+As with columns, if we rename a table by editing the `.sql` file directly, we get a potentially undesirable outcome, namely that a new table will created with the new name, possibly at the expense of the current table. If we are lucky we get a validation error that stops the project from building:
+
+![Error from renaming a table in the sql file](http://aksidjenakfjg.s3.amazonaws.com/ssdt-refactoring-part-2/rename%20validation%20error.PNG "error from renaming a table in the .sql file")
+
+If we are less lucky we may get some warnings (remember that deferred name resolution means that a missing table is only a warning rather than an error in a stored procedure), but at deploy time we will get a new table created with the new name, and possibly even a `DROP TABLE` for the existing table, assuming we have the appropriate options set. (By default, SSDT won't drop objects from the database unless we specify "[Drop objects in target but not in source]({{< relref "post/2016-10-25-database-refactoring-ssdt-dropping-objects.md#a-note-on-drop-objects-not-in-source" >}})").
+
+``` sql
+PRINT N'Dropping [dbo].[PlaylistTrack]...';
+GO
+DROP TABLE [dbo].[PlaylistTrack];
+GO
+PRINT N'Creating [dbo].[Playlist_Track]...';
+GO
+CREATE TABLE [dbo].[Playlist_Track] (
+    [PlaylistId] INT NOT NULL,
+    [TrackId]    INT NOT NULL,
+    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY NONCLUSTERED ([PlaylistId] ASC, [TrackId] ASC)
+);
+
+```
+## Renaming Programmable Objects (Views, Functions, Stored Procedures, other miscellany in [`sys.sql_modules`]
+>Refactoring Databases, p 117
+
+As noted in the [discussion of dropping programmable objects]({{< relref "post/2016-10-25-database-refactoring-ssdt-dropping-objects.md#dropping-programmable-objects-views-functions-stored-procedures-other-miscellany-in-sys-sql-modules-https-msdn-microsoft-com-en-us-library-ms175081-aspx" >}}), operations involving these objects involve substantially less risk of catastrophic data loss and consequent unemployment than similar operation involving tables and columns.
+
+It is still important to use the Refactor &rarr; Rename and Refactor &rarr; Move to Schema techniques to rename these objects rather than directly editing the `.sql` files, so that an entry is written to the `.refactorlog` file. This will ensure that the existing object is altered rather than a new one created at the expense of the old one.
+
+```xml
+<Operation Name="Rename Refactor" Key="fc4b928d-9b00-4028-9cac-5859ba9b666c" ChangeDateTime="11/12/2016 22:50:20">
+  <Property Name="ElementName" Value="[dbo].[ChangeTrackPriceByFactor]" />
+  <Property Name="ElementType" Value="SqlProcedure" />
+  <Property Name="ParentElementName" Value="[dbo]" />
+  <Property Name="ParentElementType" Value="SqlSchema" />
+  <Property Name="NewName" Value="[ChangeTrackPriceByMultiplier]" />
+</Operation>
+  ```
 
 [^1]: It isn't magic, this doesn't work with dynamic SQL, for instance.
 
