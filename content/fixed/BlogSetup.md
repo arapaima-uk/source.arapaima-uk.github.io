@@ -215,13 +215,13 @@ This can be done by adding the following to the template, substituting the name 
 
   In fact, I think I'll have one here too: [![Build Status](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io.svg?branch=master)](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io) You can get these links in various formats by clicking on the build status icon in the home page of your repo on Travis.
 
-  #The Numbers Game
+  # The Numbers Game
 
   For a good while, there were no "analytics", Google or otherwise, attached to this site. For tinfoil-hat reasons, I wasn't all that keen on GA, and it seemed like rather a lot of effort to set up anything else.
 
   I had played with Piwik on a free Azure Website in the past, but ended up being free of satisfaction with the performance. In addition, the site was quite often down as I had maxed my free MSDN credits playing with Azure SQL DW and other such oddities. AWS, even with Lightsail, was pretty expensive, and I wasn't in the mood to sign up for yet another contract with one of the many low-cost VPS providers.
 
-### Hosting
+## Hosting
   It then occurred to me that Piwik could be hosted on any shared hosting company, and I already had an extra slot on my [tsohost.com](http://my.tsohost.com/aff.php?aff=1905 "Affiliate link. This time next year, Rodney...") "el cheapo" shared hosting subscription.
 
   In a trice, I had created a new website [piwik.arapaima.uk](https://youtu.be/A0zxE0SUG1c?t=10s "No, this isn't the real domain...") and enabled `ssh`. All shared web hosts have a different, and differently annoying, method to do this, but tsohost had fairly clear instructions. `ssh` was password-auth only, but you can't have everything. It can also be switched on and off on demand through the web interface.
@@ -236,7 +236,7 @@ This can be done by adding the following to the template, substituting the name 
 
   [Tsohost](http://my.tsohost.com/aff.php?aff=1905 "Affiliate link. This time next year, Rodney...") had a UI to do this, so not much to say. After a bit of `.htaccess` tinkering the site was redirecting to [https://piwik.arapaima.uk](https://youtu.be/A0zxE0SUG1c?t=10s "No, this isn't the real domain...") and we were ready for action, following the ["5 minute install"](https://piwik.org/docs/installation/#the-5-minut-piwik-installation "5 minute Piwik installation instructions") instructions for Piwik.
 
-  ### Piwik configuration
+  ## Piwik configuration
 
   Piwik did its "system check", which was passed with flying colours. I used the tsohost wizard to create a mysql database, provided the details to the Piwik installer, and created a "superuser" login for Piwik.
 
