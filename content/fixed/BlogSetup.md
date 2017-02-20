@@ -277,3 +277,7 @@ I did add the lines
 ```
 
 to the start of the tracking function so that it doesn't get called when working locally.
+
+## Profit!
+
+All that remains is to push our changes, and Piwik is ready for action.
