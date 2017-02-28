@@ -5,7 +5,7 @@ tags = ["PowerShell", "Pester", "TDD"]
 draft = false
 +++
 
-I finally got around to looking into [Pester](https://github.com/pester/Pester) for test-driven development with PowerShell. In case it's useful to anyone, and so that I don't lose it, I created a script to download the latest release version, store it in the user's PowerShell modules folder, and run a quick test to make sure everything is working. The script is stored in a [GitHubGist](https://gist.github.com/gavincampbell/05c803654ff70d21d538b49f0e363a6a) and is reproduced below. The steps are roughly as follows:
+I finally got around to looking into [Pester](https://github.com/pester/Pester) for test-driven development with PowerShell. In case it's useful to anyone, and so that I don't lose it, I created a script to download the latest release version, store it in the user's PowerShell modules folder, and run a quick test to make sure everything is working. The script is stored in a [GitHubGist](https://gist.github.com/gavincampbell/05c803654ff70d21d538b49f0e363a6a) and is reproduced below. Some of the cmdlets require a fairly recent version of PowerShell, possibly even 5.0. The steps are roughly as follows:
 
 * Figure out what the latest release number is.
 * Assemble the correct url to download the zip file.
