@@ -215,69 +215,22 @@ This can be done by adding the following to the template, substituting the name 
 
   In fact, I think I'll have one here too: [![Build Status](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io.svg?branch=master)](https://travis-ci.org/arapaima-uk/source.arapaima-uk.github.io) You can get these links in various formats by clicking on the build status icon in the home page of your repo on Travis.
 
-# The Numbers Game
+# Bells and Whistles
 
-  For a good while, there were no "analytics", Google or otherwise, attached to this site. For tinfoil-hat reasons, I wasn't all that keen on GA, and it seemed like rather a lot of effort to set up anything else.
+## Talk is cheap
 
-  I had played with Piwik on a free Azure Website in the past, but ended up being free of satisfaction with the performance. In addition, the site was quite often down as I had maxed my free MSDN credits playing with Azure SQL DW and other such oddities. AWS, even with Lightsail, was pretty expensive, and I wasn't in the mood to sign up for yet another contract with one of the many low-cost VPS providers.
+One of the more difficult things to do on a static site is to support user-generated content such as comments. Many sites resort to hosted services such as [Disqus](https://disqus.com/), but I wasn't too keen on this option for the usual tinfoil-hat reasons; inline adverts, tracking cookies, _"7 Secrets UK Billionaires Don't want You to Know"_, etc., etc.
 
-## Hosting
-  It then occurred to me that Piwik could be hosted on any shared hosting company, and I already had an extra slot on my [tsohost.com](http://my.tsohost.com/aff.php?aff=1905 "Affiliate link. This time next year, Rodney...") "el cheapo" shared hosting subscription.
+### Options for hosting comments on statically generated sites
 
-  In a trice, I had created a new website [piwik.arapaima.uk](https://youtu.be/A0zxE0SUG1c?t=10s "No, this isn't the real domain...") and enabled `ssh`. All shared web hosts have a different, and differently annoying, method to do this, but tsohost had fairly clear instructions. `ssh` was password-auth only, but you can't have everything. It can also be switched on and off on demand through the web interface.
+There are a number of self-hosted alternatives available, most notably [Discourse](https://discourse.org/), which provides a full-featured discussion forum which can be pressed into service as a comments engine. 
 
-  After that it was a question of downloading and extracting Piwik:
-  ```bash
-  wget https://builds.piwik.org/piwik.zip && unzip piwik.zip
-  ```
-  and moving the files to the `public_html` folder. The site was then accessible on the domain [http://piwik.arapaima.uk](https://youtu.be/A0zxE0SUG1c?t=10shttps://youtu.be/A0zxE0SUG1c?t=10s "No, this isn't the real domain...").
+I did play with this in an earlier incarnation of this site, and I think it's great, but it is fairly demanding of server resources; their recommended configuration is $20 a month at DigitalOcean at the time of writing, which is a bit much for a site that otherwise costs $0. If this were a bigger, more popular site, I'd definitely be considering it, but given that 90% of the visitors to these pages could probably phone me if they wished to comment on any of the material here it seems like overkill. 
 
-### Let's encrypt
+I liked the look of [isso](https://posativ.org/isso/) too, this still requires a VPS to host, but any one will do. [Hashover](https://github.com/jacobwb/hashover-next) also looked promising, and can apparently be made to work on cheap shared hosting without a VPS. I also looked at [lambda-comments](https://github.com/jimpick/lambda-comments), which I think is a cool example of a "serverless" service and has given me a couple of ideas of my own. What all these approaches have in common is that the comments are stored somewhere other than on the main site - probably in a database of some description. This means at least _thinking_ about maybe backing this data up, even if the thought is just "really should get around to backing that data up".
 
-  [Tsohost](http://my.tsohost.com/aff.php?aff=1905 "Affiliate link. This time next year, Rodney...") had a UI to do this, so not much to say. After a bit of `.htaccess` tinkering the site was redirecting to [https://piwik.arapaima.uk](https://youtu.be/A0zxE0SUG1c?t=10s "No, this isn't the real domain...") and we were ready for action, following the ["5 minute install"](https://piwik.org/docs/installation/#the-5-minut-piwik-installation "5 minute Piwik installation instructions") instructions for Piwik.
+This content will need to be rendered somehow every time the page is served
 
-## Piwik configuration
+### Storing the comments in the repo along with the rest of the content
 
-  Piwik did its "system check", which was passed with flying colours. I used the tsohost wizard to create a mysql database, provided the details to the Piwik installer, and created a "superuser" login for Piwik.
-
-### Integrating Piwik with the Hugo site
-
-  The final step was to add the javascript client generated by Piwik to our pages. I added it in the [`layouts/partials/head`](https://github.com/arapaima-uk/source.arapaima-uk.github.io/blob/master/layouts/partials/head.html) file:
-
-  ``` html  
-  
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
- 
-<!-- Piwik -->
-<script type="text/javascript">
-  var _paq = _paq || [];
-  // tracker methods like "setCustomDimension" should be called before "trackPageView"
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-      if (window.location.hostname == "localhost")
-      return;
-
-    var u="//piwik.arapaima.uk/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<!-- End Piwik Code -->
-```
-
-I did add the lines 
-
-```javascript
- if (window.location.hostname == "localhost")
-     return;
-```
-
-to the start of the tracking function so that it doesn't get called when working locally.
-
-### Profit!
-
-All that remains is to push our changes, and Piwik is ready for action.
+I was aware, however, from some previous experimentation with [Pelican](https://getpelican.com/), that there were techniques available for storing comments as text - or markdown, yaml, whatever - files in the repo along with the rest of the content, and using the GitHub "Pull Request" mechanism to provide a means for comment moderation.
