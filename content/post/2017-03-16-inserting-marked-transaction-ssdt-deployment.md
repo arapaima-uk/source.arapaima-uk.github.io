@@ -143,7 +143,7 @@ In this particular setup, you'll get an error if you try to supply the same vers
 
 So, the career-threatening disaster has happened, and we need to restore our database to its state immediately prior to release 0.6.0. If there hasn't been a log backup since the deployment, the first step is to make one.
 
-Then, with a bit of DBA magic, we can restore our database to just before the deployment started. I generated these scripts from SQL Server Management Studio, unless you've got a competent adult handy I suggest you do the same. The crucial bit is in the last time where we specify `STOPBEFOREMARK`, which is exactly what we want to do.
+Then, with a bit of DBA magic, we can restore our database to just before the deployment started. I generated these scripts from SQL Server Management Studio, unless you've got a competent adult handy I suggest you do the same. The crucial bit is in the last line where we specify `STOPBEFOREMARK`, which is exactly what we want to do.
 
 ```SQL
 
