@@ -19,9 +19,11 @@ Well, hopefully you know from your release logs what time the database was deplo
 
 ## Marked Transactions
 
-The syntax `BEGIN TRANSACTION` _tran-name_ `WITH MARK 'Mark Description'` will cause the name of the transaction to be written into the transaction log, along with the date, time, database name, LSN, etc. The description is optional, but that gets saved too. 
+The syntax `BEGIN TRANSACTION` _tran-name_ `WITH MARK 'Mark Description'` will record the name of the transaction in the transaction log, along with the date, time, LSN, etc. The description is optional, but that gets saved too. 
 
-We can see this in action using the `pubs` database, which if you're younger than a certain age, sadly isn't what you think.
+We can see this in action using the [`pubs`](https://technet.microsoft.com/en-us/library/ms143221.aspx) database, which if you're younger than a certain age, sadly isn't what you think. 
+
+Note that if you're playing along at home, there are a couple of extra considerations; the database needs to be using the full (or bulk-logged) recovery model and _a full backup must already have been taken_, i.e. the database is not in the [pseudo-simple](http://www.sqlskills.com/blogs/paul/new-script-is-that-database-really-in-the-full-recovery-mode/) recovery model.
 
 ``` SQL
 
@@ -51,3 +53,6 @@ WHERE   [transaction Name] = 'update_auths'
 | Transaction ID | Current LSN            | Transaction Name | Operation      | Description                                                                                     | Transaction SID                                            | name              |
 |----------------|------------------------|------------------|----------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------------| 
 | 0000:000004f2  | 00000022:000005e8:0001 | update_auths     | LOP_BEGIN_XACT | 2017/03/14 20:34:44:637;update_auths;0x0105000000000005150000004cca9a3fa9173a6eba0c5dc9e9030000          | 0x0105000000000005150000004CCA9A3FA9173A6EBA0C5DC9E9030000 | ARAPAIMA\Arapaima |
+
+There are also some things of note in msdb:
+
