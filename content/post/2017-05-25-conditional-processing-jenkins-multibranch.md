@@ -5,7 +5,7 @@ tags = ["Jenkins"]
 draft = false
 +++
 
-For reasons, you might want your [Jenkins Multibranch Pipeline](https://jenkins.io/doc/book/pipeline/multibranch/) jobs do do a different thing depending on which branch is being built.
+For reasons, you might want your [Jenkins Multibranch Pipeline](https://jenkins.io/doc/book/pipeline/multibranch/) jobs to do a different thing depending on which branch is being built.
 
 Fortunately, the multibranch plugin provides us with a built-in variable `BRANCH_NAME`, which we can use to figure out which branch we are currently building.
 
@@ -27,7 +27,7 @@ The most important line in each of these scripts is the `return this` at the end
 
 If you don't have a Jenkins server handy, you can create a new one with `docker run -p 8080:8080 jenkinsci/jenkins:lts`[^1] and connect to it on http://localhost:8080. After that, it's just a question of creating a new job of type "Mutibranch Pipeline" and specifying an appropriate name. 
 
-In the "Branch Sources" section, add a source of type "Git", and provide it with the path to the source repo.
+In the "Branch Sources" section, add a source of type "Git" (not "Github"!), and provide it with the path to the source repo, in this case the gist.
 
 ### Using a gist as a source repo?
 
@@ -43,7 +43,7 @@ When you save the job configuration, Jenkins will scan the source repo, and crea
 
 ### Creating a new branch
 
-As noted above, there's nothing in the gist UI to support creating new branches. However, if we clone the gist repo to a local folder we can create the branch and push it back to the origin. You can substitute the url to your own fork of the gist in place of mine (there's only one branch in mine, and you don't have permission to create more!)
+As noted above, there's nothing in the gist UI to support creating new branches. However, if we clone the gist repo to a local folder we can create the branch and push it back to the origin. You can substitute the url to your own fork of the gist in place of mine (there's only one branch in mine, and you don't have permission to create more!). The downside of this approach of using a gist rather than a "proper" repo is that by default you get a long guid instead of a readable folder name.
 
 ```console
 
