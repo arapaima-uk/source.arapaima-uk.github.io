@@ -9,6 +9,7 @@ draft = false
 ## Past
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
+|23 May 2017|Modern Data, Medieval Methods([video](https://vimeo.com/channels/londoncd/219012736))|[London Continuous Delivery](https://www.meetup.com/London-Continuous-Delivery/events/239299249/)|
 |6 October 2016|Database Continuous Delivery on the Microsoft Platform|[SQL Relay Nottingham](http://www.sqlrelay.co.uk/event/sql-relay-2015-nottingham/)
 |12 March 2016|Unit testing with tsqlt and Visual Studio|[SQL Saturday Exeter](http://www.sqlsaturday.com/496/EventHome.aspx)
 |7 October 2015|Approaches to Database Unit Testing|[SQL Relay Nottingham](http://www.sqlrelay.co.uk/event/sql-relay-2015-nottingham/)
