@@ -13,7 +13,7 @@ I've been doing [presentations]({{< relref "fixed/Speaking.md">}}) at conference
 
 Anyway, with the advent of SQL Server on Linux, it struck me that [Vagrant](https://www.vagrantup.com/), which I'd used for some other stuff in the "day job" might be a way out of this spiral of despair.  
 
-The promise is that having set up a couple of config files, we can stand up a new VM with everything configured and in the right place merely my typing `vagrant up` at a command prompt, and remove it again by typing `vagrant destroy`. If we want to keep it around for another day, `vagrant halt` is at our disposal. We can even `ssh` to our new VM by typing `vagrant ssh`, without any fiddling around with keys or passwords.
+The promise is that having set up a couple of config files, we can stand up a new VM with everything configured and in the right place, merely by typing `vagrant up` at a command prompt, and remove it again by typing `vagrant destroy`. If we want to keep it around for another day, `vagrant halt` is at our disposal. We can even `ssh` to our new VM by typing `vagrant ssh`, without any fiddling around with keys or passwords.
 
 ## Preamble
 Yes, I'm aware it's possible to manage Windows guests with Vagrant, even from a Windows host, but my experience of trying this is that it's a world of pain, not least because the Windows box files are 800lb gorillas. The most complete attempt I've seen has been by [chocolately](https://chocolatey.org/) creator [Rob Reynolds](https://github.com/ferventcoder/vagrant-windows-puppet), who I suppose has (or had) some fairly unique needs in this area.
@@ -48,13 +48,13 @@ The shell script fetches updates with `yum` (for those more accustomed to Debian
 
 Not only are they separate packages, they require different mechanisms for accepting the terms of the EULA; one requires an environment variable `ACCEPT_EULA=y`, and the other requires a parameter `accept-eula`!
 
-We also pass the top-secret sa password as an environment variable; this is required to run the installation silently.
+We also pass the top-secret `sa` password as an environment variable; this is required to run the installation silently.
 
 Having done all that, we wait for the service to start before proceeding. This is why `tcping` was required, it's among the simplest ways to figure out if there's anything listening on a given port.
 
 Finally, we restore a database from a backup and run a script to install the tSQLt unit testing framework. By default, Vagrant will rsync the folder containing the `Vagrantfile` to a `/Vagrant` folder inside our VM, so we can simply put any files we need for provisioning (or for anything else) inside this folder. In this case, I've extracted the contents of the `tSQLt.zip` from the [tSQLt downloads page](http://tsqlt.org/downloads/). 
 
-Originally, I had the database backup copied from the [original repo](https://github.com/microsoft/sql-server-samples) here too, but had to replace this with a call to `curl`; I'm glad to say I'd sever run into the Github file size limit before! Obviously this makes the re-provisioning process a bit slower, it's best to have these large file dependencies somewhere local if you can manage it.
+Originally, I had the database backup copied from the [original repo](https://github.com/microsoft/sql-server-samples) here too, but had to replace this with a call to `curl`; I'm glad to say I'd never run into the Github file size limit before! Obviously this makes the re-provisioning process a bit slower, it's best to have these large file dependencies somewhere local if you can manage it.
 
 ### What we didn't do
 
