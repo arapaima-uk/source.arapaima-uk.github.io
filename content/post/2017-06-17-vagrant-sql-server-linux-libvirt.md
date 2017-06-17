@@ -68,7 +68,7 @@ There's nothing in the (abbreviated) `Vagrantfile` about networking (other than 
 
 ![vscode on fedora connected to linux on centos in vagrant!](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/sql-linux-vagrant/vscode.png)
 
-To be clear, this is a picture of Visual Studio Code, running on Fedora Linux 25, connected to SQL Server running on Centos 7.3 in a virtual machine provisioned by vagrant. The mssql extension for Visual Studio Code is a very recent alpha; this was to do with .net core compatibility on "modern" versions of Linux.
+To be clear, this is a picture of Visual Studio Code, running on Fedora Linux 25 (the host), connected to SQL Server running on Centos 7.3 (the guest) in a virtual machine provisioned by vagrant. The mssql extension for Visual Studio Code is a very recent alpha; this was to do with .net core compatibility on "modern" versions of Linux.
 
 The VM is a "regular" VM, you can see it here in the Fedora Virtual Machine Manager application with the console open showing the SQL Server process:
 
@@ -76,7 +76,7 @@ The VM is a "regular" VM, you can see it here in the Fedora Virtual Machine Mana
 
 ## The Wrap
 
-I was slightly surprised that all this worked as well as it did; not so much the Vagrant part as the SQL Server on Linux part, which is certainly more complete than when I last looked at it. In particular, I wasn't expecting to be able to install tSQLt on Linux - I did have to make a change to the `SetClrEnabled.sql` script that is distributed with tSQLt to turn off `clr strict security`, but apart from that it all went pretty smoothly. I have a [presentation about tSQLt](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=63722) to do next month, which was one of the motivations for this exercise, and I'll certainly be setting aside some time in the next day or two to see if everything else works the way I'd expect it do. If you want to try this out at home, and assuming your setup is roughly like mine (kvm rather than Virtualbox, vagrant already working, etc, etc):
+I was slightly surprised that all this worked as well as it did; not so much the Vagrant part as the SQL Server on Linux part, which is certainly more complete than when I last looked at it. In particular, I wasn't expecting to be able to install tSQLt on Linux - I did have to make a change to the `SetClrEnabled.sql` script that is distributed with tSQLt to turn off `clr strict security`, but apart from that it all went pretty smoothly. I have a [presentation about tSQLt](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=63722) to do next month, which was one of the motivations for this exercise, and I'll certainly be setting aside some time in the next day or two to see if everything else works the way one might expect. If you want to try this out at home, and assuming your setup is roughly like mine (kvm rather than Virtualbox, vagrant already working, etc, etc):
 
 ``` bash
 mkdir hereGoesNothing && cd hereGoesNothing;
