@@ -6,7 +6,8 @@ draft = false
 ## Upcoming
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
-|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=63722)|[SQL Saturday Manchester](http://www.sqlsaturday.com/645/EventHome.aspx)
+|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx)
+|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=62532)|[SQL Saturday Manchester](http://www.sqlsaturday.com/645/EventHome.aspx)
 
 ## Past
 |Date       |Topic                              |Event      
