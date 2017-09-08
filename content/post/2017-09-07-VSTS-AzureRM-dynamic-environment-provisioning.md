@@ -284,8 +284,10 @@ The "permanent" resource names still need to respect the rules for uniqueness th
 
 ## Summary
 
-If you're still reading, you'll be aware that this has been a somewhat "epic" article. The scenario outlined above allows us to automatically create and tear down a new environment for every single feature. Under normal circumstances, there will be four "persistent" resource groups, namely "QA" and "Production", as well as "merge" - used for building and testing "pre-merged" pull requests, and "master" - used to rebuild and retest "master" after every merge commit. The extra resource group for Azure Automation is also visible in this screenshot, as is the resource group for a feature branch, which will be automatically torn down when the branch is merged.
+If you're still reading, you'll be aware that this has been a somewhat "epic" article. The scenario outlined above allows us to automatically create and tear down a new environment for every single feature. Under normal circumstances, there will be four "persistent" resource groups, namely "QA" and "Production", as well as "merge" - used for building and testing "pre-merged" pull requests, and "master" - used to rebuild and retest "master" after every merge commit. 
+
+The extra resource group for Azure Automation is also visible in this screenshot, as is the resource group for a feature branch, which will be automatically torn down when the branch is merged.
 
 ![resource groups in the Azure Portal](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/vsts-azurerm/ResourceGroups.png)
 
-This technique is still a work in progress, if there are any glaring errors or omissions please do get in touch via the comments or via the [contact form]({{< relref "fixed/About.md">}}) on the site.
+All of the above is still a work in progress, if there are any glaring errors or omissions please do get in touch via the comments or via the [contact form]({{< relref "fixed/About.md">}}) on the site.
