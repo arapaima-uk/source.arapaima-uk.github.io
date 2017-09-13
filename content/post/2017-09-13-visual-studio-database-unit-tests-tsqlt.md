@@ -5,7 +5,7 @@ tags = ["Visual Studio", "tSQLt"]
 draft = false
 +++
 
-This came up in a question after a recent talk about database unit testing; I've done this in the past on a client project and it was in my "old" talk about testing so I thought I'd write it down here in case it's useful to anyone, not least the person who was asking the question.
+This came up in a question after a recent talk about database unit testing; I've done something similar on a client project in the past, and it was in my "old" talk about testing. So, I thought I'd write it down here in case it's useful to anyone, not least the person who was asking the question.
 
 A `.zip` file of the complete solution can be downloaded from [here](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/tSQlt-VsTest/KebabTestDemo.zip).
 
