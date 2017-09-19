@@ -4,14 +4,17 @@ draft = false
 +++
 
 ## Upcoming
-|Date       |Topic                              |Event      
+
+<!-- |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
-|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx)
-|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=62532)|[SQL Saturday Manchester](http://www.sqlsaturday.com/645/EventHome.aspx)
+|9 September 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/632/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx) -->
+Watch this space...
 
 ## Past
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
+|9 September 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/632/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx)
+|15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=62532)|[SQL Saturday Manchester](http://www.sqlsaturday.com/645/EventHome.aspx)
 |23 May 2017|Modern Data, Medieval Methods([video](https://vimeo.com/channels/londoncd/219012736))|[London Continuous Delivery](https://www.meetup.com/London-Continuous-Delivery/events/239299249/)|
 |6 October 2016|Database Continuous Delivery on the Microsoft Platform|[SQL Relay Nottingham](http://www.sqlrelay.co.uk/event/sql-relay-2015-nottingham/)
 |12 March 2016|Unit testing with tsqlt and Visual Studio|[SQL Saturday Exeter](http://www.sqlsaturday.com/496/EventHome.aspx)
