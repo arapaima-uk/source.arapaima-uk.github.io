@@ -13,6 +13,13 @@ Watch this space...
 ## Past
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
+|28 October 2017|Continuous Delivery with SSDT and VSTS|[SQL Saturday Porto](http://www.sqlsaturday.com/685/eventhome.aspx)
+|14 October 2017|Continuous Delivery with SSDT and VSTS|[SQL Saturday Sofia](http://www.sqlsaturday.com/642/eventhome.aspx)
+|13 October 2017|Continuous Delivery on the Azure Data Platform|[SQL Relay Bristol](https://www.sqlrelay.co.uk/)
+|11 October 2017|Continuous Delivery with SSDT and VSTS|[SQL Relay Leeds](https://www.sqlrelay.co.uk/)
+|10 October 2017|Effective Unit Testing for SQL Server|[SQL Relay Nottingham](https://www.sqlrelay.co.uk/)
+|9 October 2017|Continuous Delivery on the Azure Data Platform| [SQL Relay Reading](https://www.sqlrelay.co.uk/)
+|5 October 2017|Continuous Delivery with SSDT and VSTS|[PASS East Midlands](https://www.meetup.com/PASSEastMidlands/events/234773437/)
 |9 September 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/632/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx)
 |15 July 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/645/Sessions/Details.aspx?sid=62532)|[SQL Saturday Manchester](http://www.sqlsaturday.com/645/EventHome.aspx)
 |23 May 2017|Modern Data, Medieval Methods([video](https://vimeo.com/channels/londoncd/219012736))|[London Continuous Delivery](https://www.meetup.com/London-Continuous-Delivery/events/239299249/)|
