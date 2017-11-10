@@ -3,7 +3,7 @@ baseurl = "http://arapaima.uk/"
 title = "Arapaima (UK)"
 theme = "lanyon-hugo"
 PygmentsCodeFences = "true"
-PygmentsStyle = "lovelace"
+PygmentsUseClasses = "true"
 
 [params]
     DateForm = "2006-01-02"

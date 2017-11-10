@@ -8,6 +8,8 @@ toc = true
 
 # Overview
 
+> This page is somewhat out of date now, I'm in the process of moving to new hosting in any case so will write a new post then.
+
 This site is created using the [Hugo](http://gohugo.io/) static site generator and hosted on [GitHub Pages](https://pages.github.com/). It is built and deployed with [Travis CI](https://travis-ci.org/), meaning that changes and additions are pushed to the public website as soon as they are committed. For now this is an [MVP](http://dilbert.com/strip/2016-06-21), I'll add more moving parts and update this page accordingly as time goes on. There are a couple of features right "out of the box" such as drafts and scheduled posts.
 
 ## Github setup
