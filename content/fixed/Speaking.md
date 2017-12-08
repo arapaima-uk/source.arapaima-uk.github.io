@@ -5,10 +5,10 @@ draft = false
 
 ## Upcoming
 
-<!-- |Date       |Topic                              |Event      
+|Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
-|9 September 2017|[Effective Unit Testing for SQL Server](http://www.sqlsaturday.com/632/Sessions/Details.aspx?sid=63722)|[SQL Saturday Cambridge](http://www.sqlsaturday.com/632/EventHome.aspx) -->
-Watch this space...
+|8 December 2017|[Effective Unit Testing for SQL Server](https://groupby.org/conference-session-abstracts/effective-unit-testing-for-sql-server/) ([slides](http://arapaima.uk/presentations/slides-tsqlt-groupby/))|[GroupBy.org](https://groupby.org/)
+
 
 ## Past
 |Date       |Topic                              |Event      
