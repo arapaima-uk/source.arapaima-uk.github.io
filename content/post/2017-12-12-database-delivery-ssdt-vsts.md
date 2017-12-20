@@ -13,7 +13,7 @@ This article will detail importing an existing database into an SSDT project, cr
 
 ### Software Versions
 
-I'm using Visual Studio 2017 Version 15.5.1 on an Azure VM running Windows 10 Version 1703. I have a local installation of SQL Server 2017 Developer Edition with Cumulative Update 2 applied. The database used in the example is the WideWorldImporters-Full sample, which can be downloaded from [GitHub](https://github.com/Microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0). I've also downloaded tSQLt version 1.0.5873.27393 from the [tSQLt downloads page](http://tsqlt.org/downloads/).
+I'm using Visual Studio 2017 Version 15.5.1 on Windows 10 Version 1703. I have a local installation of SQL Server 2017 Developer Edition with Cumulative Update 2 applied. The database used in the example is the WideWorldImporters-Full sample, which can be downloaded from [GitHub](https://github.com/Microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0). I've also downloaded tSQLt version 1.0.5873.27393 from the [tSQLt downloads page](http://tsqlt.org/downloads/).
 
 
 ## Importing the database into an SSDT project
@@ -244,13 +244,49 @@ C:.
 
 ```
 
-By way of explanation, the `.sln` file is a Visual Studio _Solution_ file, which is a container for one or more _Project_ files, which can be of many different types. In this case we have created a `.sqlproj` file, which is the type of project used to develop a SQL Server Database. Other project types include `.csproj` for C# projects, `.vbproj` for Visual Basic projects, `.njsproj` for node.js projects and so on. We will be adding a couple more projects to this solution as the example develops, which is why I elected to create a directory for the solution. The project structure can also be viewed in the Solution Explorer window in Visual Studio:
+By way of explanation, the `.sln` file is a Visual Studio _Solution_ file, which is a container for one or more _Project_ files, which can be of many different types. In this case we have created a `.sqlproj` file, which is the type of project used to develop a SQL Server Database. Other project types include `.csproj` for C# projects, `.vbproj` for Visual Basic projects, `.njsproj` for node.js projects and so on. We will be adding a couple more projects to this solution as the example develops, which is why I elected to create a directory for the solution. 
+
+The project structure can also be viewed in the Solution Explorer window in Visual Studio:
 
 ![the newly created database project in Solution Explorer](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/newProjectInSolutionExplorer.PNG)
 
+
+For those familiar with other build systems, you can think of the project file as being a bit like a `makefile` or a `pom.xml`, but in a format that is understood by [MSBuild](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild), the build tool that is "behind the scenes" in Visual Studio.
+
+As we can see, each individual object (table, view, stored procedure, function, etc) has been extracted into its own `.sql` file, stored under the project folder. This particular layout - by schema and object type - is only a matter of convention, it doesn't really matter where the files are as long as the `.sqlproj` knows where to find them.
+
+If we take a look at one of the files, a table for example, we see a `CREATE TABLE` script along with an associated designer.
+
+![The SSDT Table Desginer](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/ssdt-table-designer.png)
+
+This is just a text file with the extension `.sql`, the "Access-style" table designer is just a representation of the contents of the file. This is one of the more difficult points for newcomers to SSDT to grasp - at this point we are no longer connected to a database, we are only working with files on our desktop. This isn't even the file that will be run when we deploy the database project - keen-eyed readers will have observed that this file could only be run _once_ in any case, as it starts with `CREATE TABLE`, which will fail the second time we try to create a table with the same name. More on how what actually happens later. The only object type for which we get this designer is tables, stored procedures - for example -  are just stored as `.sql` files:
+
+![A stored procedure in SSDT](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/stored-procedure-in-ssdt.png)
+
+
 ## Adding our project to source control and creating the initial commit
 
+Having looked briefly at SSDT, we're ready to use the Visual Studio `git` integration to add our project to source control:
 
+![Add a solution to source control from Solution Explorer](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/add-solution-to-source-control.PNG)
+
+At first glance, it appears that menu item doesn't do anything, but in fact it does:
+
+{{< highlight none "hl_lines=10">}}
+PS C:\Users\arapaima\source\repos\WideWorldImporters> gci
+
+
+    Directory: C:\Users\arapaima\source\repos\WideWorldImporters
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----       12/20/2017  10:40 PM                WideWorldImporters
+-a----       12/20/2017  11:17 PM          2581 .gitattributes
+-a----       12/20/2017  11:17 PM          4565 .gitignore
+-a----       12/13/2017  12:13 AM          1320 WideWorldImporters.sln
+
+{{< / highlight >}}
 
 
 
