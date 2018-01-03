@@ -272,8 +272,8 @@ Having looked briefly at SSDT, we're ready to use the Visual Studio `git` integr
 
 At first glance, it appears that menu item doesn't do anything, but in fact it does:
 
-{{< highlight none "hl_lines=10">}}
-PS C:\Users\arapaima\source\repos\WideWorldImporters> gci
+{{< highlight none "hl_lines=12 13">}}
+PS C:\Users\arapaima\source\repos\WideWorldImporters> gci -force
 
 
     Directory: C:\Users\arapaima\source\repos\WideWorldImporters
@@ -281,10 +281,12 @@ PS C:\Users\arapaima\source\repos\WideWorldImporters> gci
 
 Mode                LastWriteTime         Length Name
 ----                -------------         ------ ----
+d--h--       12/20/2017  11:20 PM                .git
+d--h--       12/13/2017  12:02 AM                .vs
 d-----       12/20/2017  10:40 PM                WideWorldImporters
--a----       12/20/2017  11:17 PM          2581 .gitattributes
--a----       12/20/2017  11:17 PM          4565 .gitignore
--a----       12/13/2017  12:13 AM          1320 WideWorldImporters.sln
+-a----       12/20/2017  11:17 PM           2581 .gitattributes
+-a----       12/20/2017  11:17 PM           4565 .gitignore
+-a----       12/13/2017  12:13 AM           1320 WideWorldImporters.sln
 
 {{< / highlight >}}
 
