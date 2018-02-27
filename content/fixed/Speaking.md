@@ -5,15 +5,15 @@ draft = false
 
 ## Upcoming
 
-|Date       |Topic                              |Event      
-|-----------|-----------------------------------|------------------------------------------------------------|
-|24 February 2018|[Database Continuous Delivery with SSDT and VSTS](https://sqlbits.com/Sessions/Event17/Database_Continuous_Delivery_with_SSDT_and_VSTS)|[SQLBits](https://sqlbits.com/)
+Watch this space....
+
 
 
 
 ## Past
 |Date       |Topic                              |Event      
 |-----------|-----------------------------------|------------------------------------------------------------|
+|24 February 2018|[Database Continuous Delivery with SSDT and VSTS](https://sqlbits.com/Sessions/Event17/Database_Continuous_Delivery_with_SSDT_and_VSTS) ([slides](http://arapaima.uk/presentations/database-cd-sqlbits-2018/))|[SQLBits](https://sqlbits.com/)
 |30 January 2018|Database Continuous Delivery with SSDT and VSTS ([slides](http://arapaima.uk/presentations/ssdt-vsts-winops18/))|[WinOps Meetup #18](https://www.meetup.com/WinOps/events/245497188/)
 |8 December 2017|[Effective Unit Testing for SQL Server](https://groupby.org/conference-session-abstracts/effective-unit-testing-for-sql-server/) ([slides](http://arapaima.uk/presentations/slides-tsqlt-groupby/))([video](https://www.youtube.com/watch?v=zF6tmUwwkuo))|[GroupBy.org](https://groupby.org/)
 |28 October 2017|Continuous Delivery with SSDT and VSTS|[SQL Saturday Porto](http://www.sqlsaturday.com/685/eventhome.aspx)

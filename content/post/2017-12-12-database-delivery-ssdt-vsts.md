@@ -5,7 +5,7 @@ tags = ["VSTS", "SSDT"]
 draft = true
 +++
 
-There have been a few posts similar to this on other sites over the years, but I thought I'd add my own, if only to document how I would approach a new SQL Server project, starting now, in late 2017.
+There have been a few posts similar to this on other sites over the years, but I thought I'd add my own, if only to document how I would approach a new SQL Server project, starting now, in early 2018.
 
 ## Project Overview
 
@@ -14,6 +14,8 @@ This article will detail importing an existing database into an SSDT project, cr
 ### Software Versions
 
 I'm using Visual Studio 2017 Version 15.5.1 on Windows 10 Version 1703. I have a local installation of SQL Server 2017 Developer Edition with Cumulative Update 2 applied. The database used in the example is the WideWorldImporters-Full sample, which can be downloaded from [GitHub](https://github.com/Microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0). I've also downloaded tSQLt version 1.0.5873.27393 from the [tSQLt downloads page](http://tsqlt.org/downloads/).
+
+My VSTS account was already created, if you need to do this first there are some instructions [here](https://docs.microsoft.com/en-us/vsts/accounts/create-account-msa-or-work-student).
 
 
 ## Importing the database into an SSDT project
@@ -259,7 +261,7 @@ If we take a look at one of the files, a table for example, we see a `CREATE TAB
 
 ![The SSDT Table Desginer](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/ssdt-table-designer.png)
 
-This is just a text file with the extension `.sql`, the "Access-style" table designer is just a representation of the contents of the file. This is one of the more difficult points for newcomers to SSDT to grasp - at this point we are no longer connected to a database, we are only working with files on our desktop. This isn't even the file that will be run when we deploy the database project - keen-eyed readers will have observed that this file could only be run _once_ in any case, as it starts with `CREATE TABLE`, which will fail the second time we try to create a table with the same name. More on how what actually happens later. The only object type for which we get this designer is tables, stored procedures - for example -  are just stored as `.sql` files:
+This is just a text file with the extension `.sql`, the "Access-style" table designer is just an alternative representation of the contents of the file. This is one of the more difficult points for newcomers to SSDT to grasp - at this point we are no longer connected to a database, we are only working with files on our desktop. This isn't even the file that will be run when we deploy the database project - keen-eyed readers will have observed that this file could only be run _once_ in any case, as it starts with `CREATE TABLE`, which will fail the second time we try to create a table with the same name. There will be more detail on what actually happens later. The only object type for which we get this designer is tables, stored procedures - for example -  are just stored as `.sql` files:
 
 ![A stored procedure in SSDT](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/stored-procedure-in-ssdt.png)
 
@@ -272,27 +274,70 @@ Having looked briefly at SSDT, we're ready to use the Visual Studio `git` integr
 
 At first glance, it appears that menu item doesn't do anything, but in fact it does:
 
-{{< highlight none "hl_lines=12 13">}}
-PS C:\Users\arapaima\source\repos\WideWorldImporters> gci -force
+{{< highlight PowerShell "hl_lines=9 12 13">}}
+PS> gci -force
 
 
     Directory: C:\Users\arapaima\source\repos\WideWorldImporters
 
 
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
-d--h--       12/20/2017  11:20 PM                .git
-d--h--       12/13/2017  12:02 AM                .vs
-d-----       12/20/2017  10:40 PM                WideWorldImporters
--a----       12/20/2017  11:17 PM           2581 .gitattributes
--a----       12/20/2017  11:17 PM           4565 .gitignore
--a----       12/13/2017  12:13 AM           1320 WideWorldImporters.sln
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+d--h--        1/23/2018   5:58 AM            .git
+d--h--        1/23/2018   5:55 AM            .vs
+d-----       12/20/2017  10:40 PM            WideWorldImporters
+-a----        1/23/2018   5:58 AM       2581 .gitattributes
+-a----        1/23/2018   5:58 AM       4565 .gitignore
+-a----       12/13/2017  12:13 AM       1320 WideWorldImporters.sln
 
 {{< / highlight >}}
 
+Visual Studio, or rather git, has created a hidden folder `.git`, which contains the files used by git to maintain the history of your project. This is a notable feature of git compared to other source control systems; everything needed to track history is stored _internally_ within the project folder.
+
+There are also a couple of hidden files, `.gitignore` and `.gitattributes`. `.gitignore` contains a list of files and filetypes that should be "ignored", meaning not included in source control. This consists mainly of built artifacts and intermediate files generated by Visual Studio, as well as all the other cruft that will be familiar to long-term Visual Studio users. If you want your `.gitignore` file to keep up with the latest developments in the amount of cruft generated by Visual Studio, you can download an updated file from [Github](https://github.com/github/gitignore/blob/master/VisualStudio.gitignore). The `.gitattributes` file specifies behaviours of git specific to this repo, looking inside the Visual Studio generated version will reveal that almost everything is commented out.
+
+If we inspect the history of the project, we can see that two commits have been created in our repo, the first adding the `.gitignore` and `.gitattributes` files, and the second adding all of our project files.
+
+{{< highlight PowerShell>}}
+PS> git log --oneline
+cb15683 (HEAD -> master) Add project files.
+da258b8 Add .gitignore and .gitattributes.
+{{< / highlight >}}
+
+## Pushing our repo to VSTS
+
+Everything we have done so far has been local to our developer desktop. In order to share our changes with other developers, set up Continuous Integration, back up our code, and much, much, more, we need to `push` our code to a remote repository. 
 
 
-## Adding a new stored procedure in Visual Studio
+### Adding our code to the newly created project
+
+We can do this from within Visual Studio by opening the "Team Explorer" window (with View &rarr; Team Explorer if it isn't visible already. It should be "behind" the Solution Explorer window.)
+
+![The Team Explorer Window](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/team-explorer-view.PNG)
+
+If we click on the "sync" button we are presented with a few options. Exactly what appears in this window depends on which Visual Studio extensions you have installed, but I think mine is pretty close to the default. The options shown are "Push to Team Services", "Publish to GitHub", and "Push to Remote Repository", the first two of which are self-explanatory, and the third of which is used for git services that Visual Studio doesn't "know" about, such as a local git server you created yourself.
+
+![The Team Explorer Sync Dialog](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/git-source-control-choices.PNG)
+
+When we select "Publish Git Repo" from the "Push to Visual Studio Team Services" section, Visual Studio will detect our VSTS account(s) based on the Microsoft Account used to sign into Visual Studio. I already had this set up, 
+
+![VSTS Sign-in from Visual Studio](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/vsts-account-detected.PNG)
+
+When we select "Publish Repository", Visual Studio will create the remote repo, push our code, and give us back a url for our repo in VSTS.
+
+![Push to VSTS Completed](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/push-to-vsts-completed.PNG)
+
+Clicking on this url opens a browser window with our project displayed:
+
+![Push to VSTS Completed](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/database-delivery-ssdt-vsts/git-repo-in-vsts.PNG)
+
+## Making a change to a table
+
+Without getting into the gory details of git workflows, it's mostly uncontroversial to suggest that any changes we make should be created in a new branch specifically for that purpose. This is easily done from the command line, but also from the git integration in Visual Studio Team Explorer.
+
+
+
+
 
 
 ## Extracting Reference Data into `MERGE` scripts
@@ -300,4 +345,3 @@ d-----       12/20/2017  10:40 PM                WideWorldImporters
 
 
 [^1]: Er, well, not really on-premises, as I don't have any premises, I'm typing this in a hotel room on a laptop running Linux. In a VM, really, but you get the idea.
-
