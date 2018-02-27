@@ -166,7 +166,7 @@ There's a list of all the talks I've done, of which the top few have slide decks
 
 These are some of the articles I found useful when putting this all together:
 
-[Hosting Reveal.js Slide Decks on a Jekyll-generated blog](http://jpmoral.com/blogging/2015/07/29/hosting-revealjs-slides-on-jekyll.html)
-[Reveal.js + GitHub Pages: when developers give talks](https://www.chenhuijing.com/blog/revealjs-and-github-pages/)
-[Tie Git Submodules to a Particular Commit or Branch ](https://twoguysarguing.wordpress.com/2010/11/14/tie-git-submodules-to-a-particular-commit-or-branch/)
-[Hosting a reveal.js presentation on github pages](http://annaken.github.io/hosting-revealjs-presentation-github-pages)
+* [Hosting Reveal.js Slide Decks on a Jekyll-generated blog](http://jpmoral.com/blogging/2015/07/29/hosting-revealjs-slides-on-jekyll.html)
+* [Reveal.js + GitHub Pages: when developers give talks](https://www.chenhuijing.com/blog/revealjs-and-github-pages/)
+* [Tie Git Submodules to a Particular Commit or Branch ](https://twoguysarguing.wordpress.com/2010/11/14/tie-git-submodules-to-a-particular-commit-or-branch/)
+* [Hosting a reveal.js presentation on github pages](http://annaken.github.io/hosting-revealjs-presentation-github-pages)
