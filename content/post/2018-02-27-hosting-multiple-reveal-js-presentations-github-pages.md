@@ -2,10 +2,10 @@
 title=  'Hosting your reveal.js presentations in a subfolder of your Github pages site'
 date =  "2018-02-27"
 tags = ["OffTopic", "GitHub", "revealjs"]
-draft = false
+draft = true
 +++
 
-Someone asked me how I did this so I thought I'd note it down here in case it's of use to anyone else.
+Someone recently asked me how I did this so I thought I'd note it down here in case it's of use to anyone else.
 
 There are a couple of things which I think are prerequisites, namely that this site [arapaima.uk](http://arapaima.uk) is [hosted on GitHub Pages]({{< ref "fixed/BlogSetup.md#github-setup" >}}), and has a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/).
 
@@ -13,7 +13,7 @@ Most of the [reveal.js](https://revealjs.com) slides for the public talks I've d
 
 ## Tags
 
-Now for the science bit. After I've finished with a talk, I create a [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) in the repo that says which event it was from. Tags are created with the syntax
+Now for the science bit. After I've finished with a talk, I create a [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) in the repo to indicate which event it was from. Tags are created with the syntax
 
 {{< highlight bash >}}
 git tag -a SQLBits2018 -m "SQLBits 2018, February 24 2018"
@@ -69,7 +69,7 @@ Resolving deltas: 100% (48/48), done.
 
 {{< /highlight >}}
 
-Note that I am specifying the folder name in which to create the submodule, this will form part of the url of the presentation so it has two purposes; firstly to give the folder a "pretty" name, and secondly to allow this repo to contain more than one submodule referring to the same repo, i.e. more than one version of the same presentation, by specifying `git submodule add https://github.com/arapaima-uk/database-cd-ssdt-vsts some-other-folder`. 
+Note that I am specifying the folder name in which to create the submodule, this will form part of the url of the presentation so it has two purposes; firstly to give the folder a "pretty" name, and secondly to allow this repo to contain more than one submodule referring to the same source repo, i.e. more than one version of the same presentation, by specifying `git submodule add https://github.com/arapaima-uk/database-cd-ssdt-vsts some-other-folder`. 
 
 The other thing to note is that the clone url of the submodule *must* use `https://` rather than `git://`, or nothing will work. _Ask me how I know this sometime._
 
