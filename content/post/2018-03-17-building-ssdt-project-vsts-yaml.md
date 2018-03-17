@@ -73,7 +73,7 @@ Almost all of the elapsed time here was cloning the repo from GitHub, there is q
 
 This is all very well, but we haven't managed to build our actual database project yet. To do so, we'll need to go back to GitHub and edit the build definition file.
 
-The documentation for how to specify build steps in YAML is still a "work in progress". In summary, the current procedure is to visit the [VSTS Tasks repo on GitHub](https://github.com/Microsoft/vsts-tasks/tree/master/Tasks), open the folder for the task your are interested in, and take a look at the `task.json`. 
+The documentation for how to specify build steps in YAML is still a [work in progress](https://github.com/Microsoft/vsts-agent/tree/master/docs/preview). In summary, the current procedure is to visit the [VSTS Tasks repo on GitHub](https://github.com/Microsoft/vsts-tasks/tree/master/Tasks), open the folder for the task your are interested in, and take a look at the `task.json`. 
 
 In our case, the first task we need is [MSBuild](https://github.com/Microsoft/vsts-tasks/tree/master/Tasks/MSBuild), to build the database project. Looking inside [task.json](https://github.com/Microsoft/vsts-tasks/blob/master/Tasks/MSBuild/task.json), we can see that the name of the task we need is `MSBuild`, and that there are a huge number of available `inputs` we can use to configure the task; `solution` to specify the project or solution to build, `platform`, `configuration`, and many more. In our case, we'll just specify the path to our `.sqlproj` file and let `msbuild` take care of the rest.
 
@@ -98,7 +98,7 @@ If you take a glance at the history of this file, you'll observe it took me a co
 
 ![build succeeded and produced an artifact](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/github-vsts-yaml/build-succeeded.png)
 
-For now, this is where the story ends for YAML builds in VSTS, I'll try to return to this topic later once YAML release management is publically available.
+For now, this is where the story ends for YAML builds in VSTS, I'll try to return to this topic later once YAML release management is publicly available.
 
 
 
