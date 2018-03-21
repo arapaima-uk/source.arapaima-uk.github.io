@@ -9,7 +9,7 @@ Someone recently asked me how I did this so I thought I'd note it down here in c
 
 There are a couple of things which I think are prerequisites, namely that this site [arapaima.uk](http://arapaima.uk) is [hosted on GitHub Pages]({{< ref "fixed/BlogSetup.md#github-setup" >}}), and has a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/).
 
-Most of the [reveal.js](https://revealjs.com) slides for the public talks I've done, at least recently, are themselves hosted on Github, in individual repos such as [this one](https://github.com/arapaima-uk/slides-tsqlt-groupby) or [this one](https://github.com/arapaima-uk/database-cd-ssdt-vsts).
+Most of the [reveal.js](https://revealjs.com) slides[^*] for the public talks I've done, at least recently, are themselves hosted on Github, in individual repos such as [this one](https://github.com/arapaima-uk/slides-tsqlt-groupby) or [this one](https://github.com/arapaima-uk/database-cd-ssdt-vsts).
 
 ## Tags
 
@@ -170,3 +170,5 @@ These are some of the articles I found useful when putting this all together:
 * [Reveal.js + GitHub Pages: when developers give talks](https://www.chenhuijing.com/blog/revealjs-and-github-pages/)
 * [Tie Git Submodules to a Particular Commit or Branch ](https://twoguysarguing.wordpress.com/2010/11/14/tie-git-submodules-to-a-particular-commit-or-branch/)
 * [Hosting a reveal.js presentation on github pages](http://annaken.github.io/hosting-revealjs-presentation-github-pages)
+
+[^*]: Strictly speaking, I'm using [my own fork of reveal.js](https://github.com/arapaima-uk/reveal.js). The only different between this and the upstream is that mine incorporates [Redgate](https://www.red-gate.com/)'s [fork of highlight.js](https://github.com/red-gate/highlight.js), which has better T-SQL highlighting.
