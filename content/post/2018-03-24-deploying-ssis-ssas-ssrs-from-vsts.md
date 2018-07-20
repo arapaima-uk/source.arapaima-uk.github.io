@@ -8,7 +8,7 @@ draft = true
 
 "Lifting and Shifting" of on-premises BI systems into cloud hosting seems to be all the rage in certain circles right now, and for many organisations a migration to "Infrastructure-as-a-Service", also known as "IaaS", also known as "a bunch of VMs in the cloud" represents the "lowest risk" - and, of course, "lowest reward" - approach to moving processing out of your data centre and into somebody else's.
 
-The present article will consider the advantages of being able to build and deploy "traditional" BI projects such as SSIS, SSAS, and SSRS to Windows Azure Virtual Machines using the facilities provided by Visual Studio Team Services.
+This article will consider the advantages of being able to build and deploy "traditional" BI projects such as SSIS, SSAS, and SSRS to Windows Azure Virtual Machines using the facilities provided by Visual Studio Team Services.
 
 ## The sample project
 
