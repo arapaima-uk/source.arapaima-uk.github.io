@@ -12,8 +12,8 @@ Watch this space....
 
 ## Past
 |Date       |Topic                              |Event      
-|-----------|-----------------------------------|------------------------------------------------------------|
-|20 July 2018|[Effective Unit Testing for SQL Server]([slides](http://arapaima.uk/presentations/slides-tsqlt-groupby/))|[PASS East Midlands](https://www.meetup.com/PASSEastMidlands/events/252558555/)
+|-----------|-----------------------------------|----------- -------------------------------------------------|
+|20 July 2018|Effective Unit Testing for SQL Server ([slides](http://arapaima.uk/presentations/slides-tsqlt-groupby/))|[PASS East Midlands](https://www.meetup.com/PASSEastMidlands/events/252558555/)
 |24 February 2018|[Database Continuous Delivery with SSDT and VSTS](https://sqlbits.com/Sessions/Event17/Database_Continuous_Delivery_with_SSDT_and_VSTS) ([slides](http://arapaima.uk/presentations/database-cd-sqlbits-2018/))|[SQLBits](https://sqlbits.com/)
 |30 January 2018|Database Continuous Delivery with SSDT and VSTS ([slides](http://arapaima.uk/presentations/ssdt-vsts-winops18/))|[WinOps Meetup #18](https://www.meetup.com/WinOps/events/245497188/)
 |8 December 2017|[Effective Unit Testing for SQL Server](https://groupby.org/conference-session-abstracts/effective-unit-testing-for-sql-server/) ([slides](http://arapaima.uk/presentations/slides-tsqlt-groupby/))([video](https://www.youtube.com/watch?v=zF6tmUwwkuo))|[GroupBy.org](https://groupby.org/)
