@@ -72,4 +72,6 @@ Worky
 ~\source\repos\FilteringDemo\FilteringDemo [master ≡]>
 ```
 
+![picture of the two databases](https://s3-eu-west-1.amazonaws.com/aksidjenakfjg/dacpac-filtering/dbs.png)
+
 This is a pretty simplistic example, it relies on the fact that both tables and schemas have the schema name in the first element of the `SourceObject.name.Parts[]` collection, but more complex filtering criteria can be implemented with a bit of API speleology.
